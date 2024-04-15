@@ -15,7 +15,7 @@
 /log/*
 /tmp/*
 !/log/.keep
-!/tmp/.keep
+    !/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -33,3 +33,5 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/.idea/*
