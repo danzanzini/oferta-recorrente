@@ -6,6 +6,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
+  test "should display a login form" do
+    get new_session_url
+    assert 'new'
+  end
+
   test "should log in with valid credentials" do
     post session_url, params: { email: @user.email, password: 'secret' }
     assert_redirected_to root_url
