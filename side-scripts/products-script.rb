@@ -20,6 +20,7 @@ end
 helper_list.flatten!
 helper_list.uniq!
 helper_list.each do |item|
+  item = item.split('(').first || item
   item.strip!
   item.capitalize!
   item.gsub!('  ', ' ')
