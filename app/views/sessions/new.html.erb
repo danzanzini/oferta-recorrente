@@ -1,1 +1,23 @@
-Oi!
+<h1>Login</h1>
+
+<%= form_with(scope: :session, url: session_path, local: true) do |form| %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, id: :session_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password, id: :session_password %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Login" %>
+  </div>
+<% end %>
