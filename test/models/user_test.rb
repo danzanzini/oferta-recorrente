@@ -21,9 +21,17 @@ class UserTest < ActiveSupport::TestCase
     assert_equal @org_two.id, User.first.organization_id
   end
 
-  test 'full name' do
+  test '#full_name' do
     @user.first_name = 'Valter'
     @user.last_name = 'França'
     assert_equal @user.name, 'Valter França'
+  end
+
+  test "#toggle_active!" do
+    @user.toggle_active!
+    assert !@user.active
+
+    @user.toggle_active!
+    assert @user.active
   end
 end

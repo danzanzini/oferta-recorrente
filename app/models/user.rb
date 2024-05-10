@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
   belongs_to :organization
@@ -9,5 +11,9 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def toggle_active!
+    update_attribute!(:active, !active)
   end
 end

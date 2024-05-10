@@ -19,7 +19,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not log in with invalid credentials" do
     post session_url, params: { email: @user.email, password: 'wrong' }
-    puts flash[:alert]
     assert 'new'
     assert_nil session[:user_id]
   end
