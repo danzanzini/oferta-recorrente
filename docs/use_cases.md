@@ -138,14 +138,13 @@
 - **Pós-condições:** As oferendas e colheitas são gerenciadas conforme as ações do administrador.
 
 ### Gerenciar Localizações
-- **Ator:** Administrador
 - **Objetivo:** Permitir que o administrador gerencie (adicione, edite e remova) localizações disponíveis para as assinaturas dos usuários.
 - **Pré-condições:** O administrador deve estar logado no sistema.
 - **Fluxo Principal:**
   #### Adicionar Nova Localização
   1. O administrador acessa o painel de controle de localizações.
   2. O administrador seleciona a opção para adicionar uma nova localização.
-  3. O administrador insere os detalhes da localização (nome, descrição, coordenadas).
+  3. O administrador insere os detalhes da localização (nome, descrição, link e endereço).
   4. O sistema valida as informações e salva a nova localização.
   5. **Pós-condições:** A nova localização está disponível para ser associada a assinaturas de usuários.
   #### Editar Localização Existente
