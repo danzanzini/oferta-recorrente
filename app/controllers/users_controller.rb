@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    @user.organization = current_tenant
+    @user.organization = current_organization
     @user.password = user_params['email']
 
     respond_to do |format|

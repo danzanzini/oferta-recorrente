@@ -3,6 +3,8 @@ require "test_helper"
 class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @location = locations(:one)
+    @user = users(:one)
+    log_in_as(@user)
   end
 
   test "should get index" do

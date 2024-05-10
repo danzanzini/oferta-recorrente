@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  before_action :require_login
   before_action :set_location, only: %i[ show edit update destroy ]
 
   # GET /locations or /locations.json
@@ -22,6 +23,7 @@ class LocationsController < ApplicationController
   # POST /locations or /locations.json
   def create
     @location = Location.new(location_params)
+    @location.organization = current_organization
 
     respond_to do |format|
       if @location.save
@@ -65,6 +67,6 @@ class LocationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def location_params
-      params.require(:location).permit(:name, :link, :address, :organization_id)
+      params.require(:location).permit(:name, :link, :address)
     end
 end

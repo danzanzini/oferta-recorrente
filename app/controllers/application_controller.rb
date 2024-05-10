@@ -2,8 +2,8 @@
 
 class ApplicationController < ActionController::Base
   set_current_tenant_through_filter
-  before_action :set_tenant
   helper_method :current_user
+  helper_method :current_organization
   helper_method :logged_in?
 
   private
@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
     @current_user ||= session[:user_id] && User.find_by(id: session[:user_id])
   end
 
-  def set_tenant
-    current_user && set_current_tenant(@current_user.organization)
+  def current_organization
+    @current_organization ||= set_current_tenant(@current_user.organization)
   end
 
   def logged_in?
