@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :require_login
   before_action :set_product, only: %i[ show edit update destroy ]
 
   # GET /products or /products.json
@@ -22,6 +23,7 @@ class ProductsController < ApplicationController
   # POST /products or /products.json
   def create
     @product = Product.new(product_params)
+    @product.organization = current_organization
 
     respond_to do |format|
       if @product.save

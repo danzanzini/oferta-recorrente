@@ -67,14 +67,46 @@
 
 ## Produtor
 
-### Cadastrar um Novo Produto
-- **Descrição:** Permitir que o produtor adicione um novo produto ao catálogo.
+Para evoluir o caso de uso de produtos para "Gerenciar Produtos", considerando que os produtos têm nome, descrição e principais usos, sem mencionar o preço, podemos expandir o caso de uso para incluir não apenas o cadastro, mas também a edição e remoção de produtos. Além disso, ajustaremos a descrição para refletir as novas informações sobre os produtos.
+
+### Gerenciar Produtos
+
+#### Cadastrar um Novo Produto
+- **Descrição:** Permitir que o produtor adicione um novo produto ao catálogo, incluindo seu nome, descrição e principais usos.
 - **Pré-condições:** Estar logado como produtor.
 - **Fluxo Principal:**
   1. O produtor acessa a seção de cadastro de produtos.
-  2. O produtor insere informações do novo produto (nome, descrição, preço).
-  3. O sistema registra o novo produto.
-- **Pós-condições:** O produto é adicionado ao catálogo.
+  2. O produtor insere informações do novo produto (nome, descrição, principais usos).
+  3. O sistema valida as informações inseridas.
+  4. O sistema registra o novo produto no catálogo.
+- **Pós-condições:** O produto é adicionado ao catálogo e disponível para ser associado a oferendas ou kits.
+
+#### Editar um Produto Existente
+- **Descrição:** Permitir que o produtor altere as informações de um produto já cadastrado no sistema.
+- **Pré-condições:** Estar logado como produtor e o produto deve estar previamente cadastrado.
+- **Fluxo Principal:**
+  1. O produtor acessa a lista de produtos cadastrados.
+  2. O produtor seleciona o produto que deseja editar.
+  3. O produtor atualiza as informações necessárias (nome, descrição, principais usos).
+  4. O sistema valida as informações atualizadas.
+  5. O sistema aplica as alterações ao produto.
+- **Pós-condições:** As informações do produto são atualizadas no catálogo.
+
+#### Remover um Produto
+- **Descrição:** Permitir que o produtor remova um produto do catálogo.
+- **Pré-condições:** Estar logado como produtor e o produto não deve estar associado a nenhuma oferenda ou kit ativo.
+- **Fluxo Principal:**
+  1. O produtor acessa a lista de produtos cadastrados.
+  2. O produtor seleciona o produto que deseja remover.
+  3. O sistema solicita confirmação para a remoção do produto.
+  4. Após confirmação, o sistema remove o produto do catálogo.
+- **Fluxo Alternativo:** Produto associado a oferenda ou kit.
+  - O sistema informa que o produto está associado e não pode ser removido.
+- **Pós-condições:** O produto é removido do catálogo, caso não esteja associado a oferendas ou kits ativos.
+
+**Regras de Negócio:**
+- RN1: Produtos só podem ser removidos se não estiverem associados a oferendas ou kits ativos.
+- RN2: Todas as alterações devem ser validadas para garantir a integridade das informações.
 
 ### Cadastrar um Novo Kit
 - **Descrição:** Permitir que o produtor crie kits de produtos para venda.
