@@ -17,6 +17,11 @@
   </div>
 
   <div>
+    <%= form.label :pickup_place, style: "display: block" %>
+    <%= form.text_field :pickup_place %>
+  </div>
+
+  <div>
     <%= form.label :link, style: "display: block" %>
     <%= form.text_field :link %>
   </div>
@@ -26,10 +31,6 @@
     <%= form.text_field :address %>
   </div>
 
-  <div>
-    <%= form.label :organization_id, style: "display: block" %>
-    <%= form.text_field :organization_id %>
-  </div>
 
   <div>
     <%= form.submit %>
