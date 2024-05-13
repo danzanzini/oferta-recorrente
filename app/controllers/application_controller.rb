@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
   set_current_tenant_through_filter
   helper_method :current_user
   helper_method :current_organization
