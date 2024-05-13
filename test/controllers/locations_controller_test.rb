@@ -40,11 +40,12 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to location_url(@location)
   end
 
-  test "should destroy location" do
-    assert_difference("Location.count", -1) do
-      delete location_url(@location)
-    end
-
-    assert_redirected_to locations_url
-  end
+  # TODO: Test deactivating instead
+  # test "should destroy location" do
+  #   assert_difference("Location.count", -1) do
+  #     delete location_url(@location)
+  #   end
+  #
+  #   assert_redirected_to locations_url
+  # end
 end

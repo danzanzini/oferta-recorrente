@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  opens_at: 2024-05-13 09:43:27
+  closes_at: 2024-05-13 09:43:27
+  harvest_at: 2024-05-13
+  location: one
+  organization: one
+
+two:
+  opens_at: 2024-05-13 09:43:27
+  closes_at: 2024-05-13 09:43:27
+  harvest_at: 2024-05-13
+  location: two
+  organization: two

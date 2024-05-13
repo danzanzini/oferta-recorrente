@@ -1,0 +1,42 @@
+<%= form_with(model: offering) do |form| %>
+  <% if offering.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
+
+      <ul>
+        <% offering.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :opens_at, style: "display: block" %>
+    <%= form.datetime_field :opens_at %>
+  </div>
+
+  <div>
+    <%= form.label :closes_at, style: "display: block" %>
+    <%= form.datetime_field :closes_at %>
+  </div>
+
+  <div>
+    <%= form.label :harvest_at, style: "display: block" %>
+    <%= form.date_field :harvest_at %>
+  </div>
+
+  <div>
+    <%= form.label :location_id, style: "display: block" %>
+    <%= form.text_field :location_id %>
+  </div>
+
+  <div>
+    <%= form.label :organization_id, style: "display: block" %>
+    <%= form.text_field :organization_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
