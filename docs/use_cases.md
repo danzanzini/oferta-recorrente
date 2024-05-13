@@ -117,35 +117,45 @@ Para evoluir o caso de uso de produtos para "Gerenciar Produtos", considerando q
   3. O sistema registra o novo kit.
 - **Pós-condições:** O kit é adicionado ao catálogo.
 
-### Criar uma Nova Oferenda
-- **Descrição:** Permitir que o produtor crie oferendas baseadas em oferendas anteriores.
+### Gerenciar Oferendas
+- **Descrição:** Permitir que o produtor gerencie de forma abrangente as oferendas, desde a criação, edição, publicação até a impressão de listas de itens coletados, com a capacidade de gerenciar múltiplas oferendas ativas simultaneamente em diferentes locais.
 - **Pré-condições:** Estar logado como produtor.
-- **Fluxo Principal:**
-  1. O produtor acessa a seção de oferendas.
-  2. O sistema usa a última oferenda como base pra compor uma nova.
-  3. O produtor modifica/adiciona informações para criar a nova oferenda.
-  4. O sistema registra a nova oferenda.
+
+#### Criar uma Nova Oferenda
+1. O produtor acessa a seção de oferendas.
+2. O sistema oferece a opção de criar uma nova oferenda, podendo usar a última oferenda como base.
+3. O produtor modifica/adiciona informações para criar a nova oferenda.
+4. O sistema valida as informações e registra a nova oferenda.
 - **Pós-condições:** A nova oferenda é criada e registrada no sistema.
 
-### Publicar uma Oferenda
-- **Descrição:** Automatizar a publicação de oferendas para os consumidores.
-- **Pré-condições:** Estar logado como produtor e ter uma oferenda pronta para publicação.
-- **Fluxo Principal:**
-  1. O produtor seleciona a oferenda a ser publicada.
-  2. O produtor define uma data de abertura e fechamento.
-  3. O produtor confirma a publicação.
-  4. O sistema automaticamente disponibiliza a oferenda para os consumidores durante o período selecionado.
-- **Pós-condições:** A oferenda é publicada e visível para os consumidores durante o período selecionado.
+#### Editar uma Oferenda
+1. O produtor seleciona uma oferenda existente da lista de oferendas.
+2. O sistema permite a edição de informações da oferenda selecionada (nome, descrição, itens incluídos, datas de abertura e fechamento, locais específicos).
+3. O produtor realiza as alterações desejadas.
+4. O sistema valida as alterações e atualiza a oferenda.
+- **Pós-condições:** A oferenda é atualizada com as novas informações.
 
-### Imprimir Lista de Itens Coletados de Determinada Oferenda
-- **Descrição:** Permitir que o produtor imprima uma lista de itens coletados para uma oferenda específica.
-- **Pré-condições:** Estar logado como produtor e ter oferendas registradas e fechadas.
-- **Fluxo Principal:**
-  1. O produtor acessa a seção de oferendas.
-  2. O produtor seleciona uma oferenda.
-  3. O produtor solicita a impressão da lista de itens coletados.
-  4. O sistema gera e disponibiliza a lista para impressão.
+#### Publicar uma Oferenda
+1. O produtor seleciona uma oferenda editada ou recém-criada para publicação.
+2. Define parâmetros de publicação, incluindo datas de abertura e fechamento e locais específicos.
+3. O sistema processa a publicação, tornando a oferenda visível para os consumidores conforme definido.
+- **Pós-condições:** A oferenda é publicada e disponível para os consumidores nos locais especificados.
+
+#### Imprimir Lista de Itens Coletados
+1. O produtor acessa a lista de oferendas fechadas.
+2. Seleciona uma oferenda para a qual deseja imprimir a lista de itens coletados.
+3. O sistema gera a lista dos itens coletados para essa oferenda.
+4. O produtor imprime a lista.
 - **Pós-condições:** O produtor obtém a lista de itens para a oferenda selecionada.
+
+#### Regras de Negócio
+- RN1: Oferendas podem ser criadas e editadas em partes, permitindo a adição ou alteração de informações em diferentes momentos.
+- RN2: Múltiplas oferendas podem estar ativas simultaneamente, desde que sejam para locais diferentes, evitando sobreposições no mesmo local.
+- RN3: A publicação de uma oferenda requer a validação completa de todas as informações, incluindo locais e datas específicas, para garantir a organização e evitar conflitos.
+
+#### Fluxo Alternativo
+- **Oferenda com Informações Incompletas:** Caso o produtor tente publicar uma oferenda com informações incompletas, o sistema exibirá uma mensagem de erro, solicitando a conclusão das informações faltantes.
+- **Conflito de Localização:** Se o produtor tentar ativar uma oferenda em um local que já possui uma oferenda ativa no mesmo período, o sistema alertará sobre o conflito e solicitará a revisão das informações de localização ou datas.
 
 ## Administrador
 
