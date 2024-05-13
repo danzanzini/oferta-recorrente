@@ -1,4 +1,5 @@
 class OfferingsController < ApplicationController
+  before_action :require_login
   before_action :set_offering, only: %i[ show edit update destroy ]
 
   # GET /offerings or /offerings.json
@@ -22,6 +23,7 @@ class OfferingsController < ApplicationController
   # POST /offerings or /offerings.json
   def create
     @offering = Offering.new(offering_params)
+    @offering.organization = current_organization
 
     respond_to do |format|
       if @offering.save
@@ -65,6 +67,6 @@ class OfferingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def offering_params
-      params.require(:offering).permit(:opens_at, :closes_at, :harvest_at, :location_id, :organization_id)
+      params.require(:offering).permit(:opens_at, :closes_at, :harvest_at, :location_id)
     end
 end
