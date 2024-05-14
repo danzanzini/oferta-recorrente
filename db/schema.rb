@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_14_195827) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_14_201640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "harvested_products", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "harvest_id", null: false
+    t.bigint "offered_product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["harvest_id"], name: "index_harvested_products_on_harvest_id"
+    t.index ["offered_product_id"], name: "index_harvested_products_on_offered_product_id"
+  end
 
   create_table "harvests", force: :cascade do |t|
     t.bigint "offering_id", null: false
@@ -53,6 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_195827) do
     t.bigint "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true, null: false
     t.index ["location_id"], name: "index_offerings_on_location_id"
     t.index ["organization_id"], name: "index_offerings_on_organization_id"
   end
@@ -87,6 +98,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_195827) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
+  add_foreign_key "harvested_products", "harvests"
+  add_foreign_key "harvested_products", "offered_products"
   add_foreign_key "harvests", "offerings"
   add_foreign_key "harvests", "users"
   add_foreign_key "locations", "organizations"

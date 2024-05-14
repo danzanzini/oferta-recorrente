@@ -3,6 +3,8 @@ require "test_helper"
 class HarvestsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @harvest = harvests(:one)
+    @user = users(:one)
+    log_in_as(@user)
   end
 
   test "should get index" do
@@ -36,13 +38,5 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
   test "should update harvest" do
     patch harvest_url(@harvest), params: { harvest: { offering_id: @harvest.offering_id, user_id: @harvest.user_id } }
     assert_redirected_to harvest_url(@harvest)
-  end
-
-  test "should destroy harvest" do
-    assert_difference("Harvest.count", -1) do
-      delete harvest_url(@harvest)
-    end
-
-    assert_redirected_to harvests_url
   end
 end

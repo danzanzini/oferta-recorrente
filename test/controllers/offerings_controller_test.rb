@@ -40,10 +40,8 @@ class OfferingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy offering" do
-    assert_difference("Offering.count", -1) do
-      delete offering_url(@offering)
-    end
-
+    delete offering_url(@offering)
+    assert !@offering.reload.active
     assert_redirected_to offerings_url
   end
 end

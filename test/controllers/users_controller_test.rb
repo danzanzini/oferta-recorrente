@@ -44,9 +44,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy user' do
-    assert_difference('User.count', -1) do
-      delete user_url(@user)
-    end
+    delete user_url(@user)
+    assert !@user.reload.active
 
     assert_redirected_to users_url
   end

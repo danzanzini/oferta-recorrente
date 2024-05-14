@@ -52,7 +52,7 @@ class OfferingsController < ApplicationController
 
   # DELETE /offerings/1 or /offerings/1.json
   def destroy
-    @offering.destroy!
+    @offering.update_attribute!(:active, false)
 
     respond_to do |format|
       format.html { redirect_to offerings_url, notice: 'Offering was successfully destroyed.' }

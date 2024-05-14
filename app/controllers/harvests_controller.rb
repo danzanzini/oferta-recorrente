@@ -1,5 +1,6 @@
 class HarvestsController < ApplicationController
-  before_action :set_harvest, only: %i[ show edit update destroy ]
+  before_action :require_login
+  before_action :set_harvest, only: %i[ show edit update ]
 
   # GET /harvests or /harvests.json
   def index
@@ -22,6 +23,7 @@ class HarvestsController < ApplicationController
   # POST /harvests or /harvests.json
   def create
     @harvest = Harvest.new(harvest_params)
+    @harvest.user = current_user
 
     respond_to do |format|
       if @harvest.save
@@ -44,16 +46,6 @@ class HarvestsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @harvest.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /harvests/1 or /harvests/1.json
-  def destroy
-    @harvest.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to harvests_url, notice: "Harvest was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
