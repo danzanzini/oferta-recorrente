@@ -11,12 +11,12 @@ class OfferingTest < ActiveSupport::TestCase
     now = Time.now
     @offering.opens_at = now - 1.hour
     @offering.closes_at = now + 1.hour
-    assert @offering.is_open?(now)
+    assert @offering.open?(now)
   end
 
   test 'its closed at a given time' do
     now = Time.now
     @offering.opens_at = now + 1.hour
-    assert !@offering.is_open?(now)
+    assert !@offering.open?(now)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OfferingsController < ApplicationController
   before_action :require_login
   before_action :set_offering, only: %i[ show edit update destroy ]
@@ -8,17 +10,16 @@ class OfferingsController < ApplicationController
   end
 
   # GET /offerings/1 or /offerings/1.json
-  def show
-  end
+  def show; end
 
   # GET /offerings/new
   def new
     @offering = Offering.new
+    @offering.offered_products.build
   end
 
   # GET /offerings/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /offerings or /offerings.json
   def create
@@ -27,7 +28,7 @@ class OfferingsController < ApplicationController
 
     respond_to do |format|
       if @offering.save
-        format.html { redirect_to offering_url(@offering), notice: "Offering was successfully created." }
+        format.html { redirect_to offering_url(@offering), notice: 'Offering was successfully created.' }
         format.json { render :show, status: :created, location: @offering }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +41,7 @@ class OfferingsController < ApplicationController
   def update
     respond_to do |format|
       if @offering.update(offering_params)
-        format.html { redirect_to offering_url(@offering), notice: "Offering was successfully updated." }
+        format.html { redirect_to offering_url(@offering), notice: 'Offering was successfully updated.' }
         format.json { render :show, status: :ok, location: @offering }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,19 +55,22 @@ class OfferingsController < ApplicationController
     @offering.destroy!
 
     respond_to do |format|
-      format.html { redirect_to offerings_url, notice: "Offering was successfully destroyed." }
+      format.html { redirect_to offerings_url, notice: 'Offering was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_offering
-      @offering = Offering.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_offering
+    @offering = Offering.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def offering_params
-      params.require(:offering).permit(:opens_at, :closes_at, :harvest_at, :location_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def offering_params
+    params.require(:offering).permit(
+      :opens_at, :closes_at, :harvest_at, :location_id,
+      offered_products_attributes: %i[id product_id amount _destroy]
+    )
+  end
 end

@@ -1,0 +1,13 @@
+<div class="nested-fields">
+  <div class="field">
+    <%= form.label :product_id, "Product" %>
+    <%= form.collection_select :product_id, Product.all, :id, :name, prompt: "Select a product" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <%= button_tag 'Remove', type: 'button', data: { action: 'click->offerings#removeProduct' } %>
+</div>

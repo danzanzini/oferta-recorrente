@@ -1,4 +1,4 @@
-<%= form_with(model: offering) do |form| %>
+<%= form_with(model: offering, local: true, data: { offering_id: offering.id, controller: 'offerings' }) do |form| %>
   <% if offering.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
@@ -29,6 +29,16 @@
   <div>
     <%= form.label :location_id, style: "display: block" %>
     <%= form.collection_select(:location_id, Location.all, :id, :name) %>
+  </div>
+
+  <h3>Offered Products</h3>
+  <div id="offered-products">
+    <%= form.fields_for :offered_products do |offered_product_form| %>
+      <%= render 'offered_product_fields', form: offered_product_form %>
+    <% end %>
+    <div class="links">
+      <%= button_tag 'Add Product', type: 'button', data: { action: 'click->offerings#addProduct' } %>
+    </div>
   </div>
 
   <div>
