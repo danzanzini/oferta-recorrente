@@ -37,13 +37,13 @@
 
   <h3>Offered Products</h3>
   <template data-nested-form-target="template">
-    <%= form.fields_for :offered_products do |offered_product_form| %>
-      <%= render "offered_product_fields", form: offered_product_form %>
+    <%= form.fields_for :offered_products, OfferedProduct.new(offering: offering), child_index: 'NEW_RECORD' do |offered_product_fields| %>
+      <%= render "offered_product_fields", form: offered_product_fields %>
     <% end %>
   </template>
 
-  <%= form.fields_for :offered_products do |offered_product_form| %>
-    <%= render "offered_product_fields", form: offered_product_form %>
+  <%= form.fields_for :offered_products do |offered_product_fields| %>
+    <%= render "offered_product_fields", form: offered_product_fields %>
   <% end %>
 
   <div data-nested-form-target="target"></div>

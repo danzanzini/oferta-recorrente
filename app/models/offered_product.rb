@@ -4,5 +4,6 @@ class OfferedProduct < ApplicationRecord
   belongs_to :offering
   belongs_to :product
 
-  acts_as_tenant :organization, through: :offering
+  # TODO: Solve bug when trying to save an offering with acts_as_tenant
+  # acts_as_tenant :organization, through: :offering
 end
