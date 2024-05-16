@@ -19,7 +19,7 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create harvest" do
     assert_difference("Harvest.count") do
-      post harvests_url, params: { harvest: { offering_id: @harvest.offering_id, user_id: @harvest.user_id } }
+      post harvests_url, params: { harvest: {} }
     end
 
     assert_redirected_to harvest_url(Harvest.last)

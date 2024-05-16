@@ -4,8 +4,10 @@ one:
   organization: one
   email: user_one@gmail.com
   password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
+  location: one
 
 two:
   organization: two
   email: user_two@gmail.com
   password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
+  location: two
