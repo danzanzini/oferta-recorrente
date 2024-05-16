@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_secure_password
   belongs_to :organization
+  belongs_to :location, optional: true
 
   enum role: { supporter: 0, admin: 1, producer: 2 }
 
@@ -15,5 +16,9 @@ class User < ApplicationRecord
 
   def toggle_active!
     update_attribute!(:active, !active)
+  end
+
+  def current_offering
+
   end
 end
