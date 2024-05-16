@@ -10,15 +10,13 @@ class User < ApplicationRecord
   acts_as_tenant :organization
   validates_uniqueness_to_tenant :email
 
+  delegate :current_offering, to: :location, allow_nil: false
+
   def name
     "#{first_name} #{last_name}"
   end
 
   def toggle_active!
     update_attribute!(:active, !active)
-  end
-
-  def current_offering
-
   end
 end

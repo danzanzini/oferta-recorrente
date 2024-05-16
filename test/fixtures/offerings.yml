@@ -13,3 +13,22 @@ two:
   harvest_at: 2024-05-13
   location: two
   organization: two
+
+open:
+  opens_at: <%= 1.hour.ago %>
+  closes_at: <%= 1.hour.from_now %>
+  location: one
+  organization: one
+
+closed_past:
+  opens_at: <%= 2.days.ago %>
+  closes_at: <%= 1.day.ago %>
+  location: one
+  organization: one
+
+closed_future:
+  opens_at: <%= 1.day.from_now %>
+  closes_at: <%= 2.days.from_now %>
+  location: one
+  organization: one
+

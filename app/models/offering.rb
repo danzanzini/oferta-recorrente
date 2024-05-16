@@ -10,6 +10,11 @@ class Offering < ApplicationRecord
 
   accepts_nested_attributes_for :offered_products, allow_destroy: true, reject_if: :all_blank
 
+  scope :open_now, lambda {
+    where('opens_at <= ?', Time.zone.now)
+      .where('closes_at >= ?', Time.zone.now)
+  }
+
   def open?(now)
     opens_at <= now && closes_at >= now
   end
