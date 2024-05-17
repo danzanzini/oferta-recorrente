@@ -4,6 +4,7 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @harvest = harvests(:one)
     @user = users(:one)
+    @offering = offerings(:open)
     log_in_as(@user)
   end
 
@@ -19,7 +20,7 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create harvest" do
     assert_difference("Harvest.count") do
-      post harvests_url, params: { harvest: {} }
+      post harvests_url, params: { harvest: { none: 1 } }
     end
 
     assert_redirected_to harvest_url(Harvest.last)
@@ -36,7 +37,7 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update harvest" do
-    patch harvest_url(@harvest), params: { harvest: { offering_id: @harvest.offering_id, user_id: @harvest.user_id } }
+    patch harvest_url(@harvest), params: { harvest: { none: 1 } }
     assert_redirected_to harvest_url(@harvest)
   end
 end

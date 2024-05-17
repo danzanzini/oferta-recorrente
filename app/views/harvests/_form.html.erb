@@ -10,6 +10,19 @@
       </ul>
     </div>
   <% end %>
+
+  <div>
+    <%= form.label :harvested_products, style: "display: block" %>
+    <% @current_offering.offered_products.each do |offered| %>
+      <p><%= "#{offered.product_name}: #{offered.amount}" %></p>
+      <%= form.fields_for :harvested_products, HarvestedProduct.new(offered_product: offered), child_index: 'NEW_RECORD' do |harvested_fields| %>
+        <%= harvested_fields.label :amount %>
+        <%= harvested_fields.text_field :amount %>
+        <%#= render "offered_product_fields", form: offered_product_fields %>
+      <% end %>
+    <% end %>
+  </div>
+
   <div>
     <%= form.submit %>
   </div>

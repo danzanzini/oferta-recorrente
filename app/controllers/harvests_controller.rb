@@ -2,6 +2,7 @@
 
 class HarvestsController < ApplicationController
   before_action :require_login
+  before_action :set_current_offering
   before_action :set_harvest, only: %i[show edit update]
 
   # GET /harvests or /harvests.json
@@ -14,10 +15,7 @@ class HarvestsController < ApplicationController
 
   # GET /harvests/new
   def new
-    @harvest = Harvest.new(
-      user: current_user,
-      offering: current_user.current_offering
-    )
+    @harvest = Harvest.new
   end
 
   # GET /harvests/1/edit
@@ -27,6 +25,7 @@ class HarvestsController < ApplicationController
   def create
     @harvest = Harvest.new(harvest_params)
     @harvest.user = current_user
+    @harvest.offering = @current_offering
 
     respond_to do |format|
       if @harvest.save
@@ -61,6 +60,10 @@ class HarvestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def harvest_params
-    params.require(:harvest).permit(:none)
+    params.require(:harvest).permit(harvested_products_attributes: %i[offerred_product_id amount _destroy])
+  end
+
+  def set_current_offering
+    @current_offering = current_user.current_offering
   end
 end
