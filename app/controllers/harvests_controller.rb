@@ -2,7 +2,7 @@
 
 class HarvestsController < ApplicationController
   before_action :require_login
-  before_action :set_current_offering
+  before_action :set_current_offering, only: %i[new create edit update]
   before_action :set_harvest, only: %i[show edit update]
 
   # GET /harvests or /harvests.json

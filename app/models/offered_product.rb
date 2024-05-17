@@ -3,6 +3,7 @@
 class OfferedProduct < ApplicationRecord
   belongs_to :offering
   belongs_to :product
+  has_many :harvested_products
 
   delegate :name, to: :product, prefix: true
 
