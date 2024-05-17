@@ -9,4 +9,8 @@
     <%= harvest.user_id %>
   </p>
 
+  <%= harvest.harvested_products.count %>
+  <% harvest.harvested_products.each do |harvested| %>
+    <%= "#{harvested.product_name}: #{harvested.amount}" %>
+  <% end %>
 </div>

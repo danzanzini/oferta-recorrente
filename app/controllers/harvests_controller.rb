@@ -16,6 +16,7 @@ class HarvestsController < ApplicationController
   # GET /harvests/new
   def new
     @harvest = Harvest.new
+    @harvest.harvested_products.build
   end
 
   # GET /harvests/1/edit
@@ -60,7 +61,7 @@ class HarvestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def harvest_params
-    params.require(:harvest).permit(harvested_products_attributes: %i[offerred_product_id amount _destroy])
+    params.require(:harvest).permit(harvested_products_attributes: %i[offered_product_id amount _destroy])
   end
 
   def set_current_offering
