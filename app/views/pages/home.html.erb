@@ -3,7 +3,12 @@ Oi! Você está na tela inicial do sistema.
 <% if policy(User).create? %>
   <p><%= link_to users_path do %>Manage Users<% end %></p>
 <% end %>
-<p><%= link_to locations_path do %>Manage Locations<% end %></p>
+
+<% if policy(Location).create? %>
+  <p><%= link_to locations_path do %>Manage Locations<% end %></p>
+<% end %>
+
+
 <p><%= link_to products_path do %>Manage Products<% end %></p>
 <p><%= link_to offerings_path do %>Manage Offerings<% end %></p>
 <p><%= link_to harvests_path do %>Manage Harvests<% end %></p>

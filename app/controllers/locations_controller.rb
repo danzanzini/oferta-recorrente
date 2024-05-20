@@ -7,6 +7,7 @@ class LocationsController < ApplicationController
   # GET /locations or /locations.json
   def index
     @locations = Location.all
+    authorize @locations
   end
 
   # GET /locations/1 or /locations/1.json
@@ -24,6 +25,7 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
     @location.organization = current_organization
+    authorize @location
 
     respond_to do |format|
       if @location.save
@@ -64,6 +66,7 @@ class LocationsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_location
     @location = Location.find(params[:id])
+    authorize @location
   end
 
   # Only allow a list of trusted parameters through.
