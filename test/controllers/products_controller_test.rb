@@ -3,7 +3,7 @@ require "test_helper"
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @product = products(:one)
-    @user = users(:one)
+    @user = users(:producer)
     log_in_as(@user)
   end
 

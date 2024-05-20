@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+class ProductPolicy < ApplicationPolicy
+  def index?
+    user.admin? || user.producer?
+  end
+
+  def show?
+    user.admin? || user.producer?
+  end
+
+  def create?
+    user.admin? || user.producer?
+  end
+
+  def new?
+    user.admin? || user.producer?
+  end
+
+  def update?
+    user.admin? || user.producer?
+  end
+
+  def edit?
+    user.admin? || user.producer?
+  end
+
+  def destroy?
+    user.admin? || user.producer?
+  end
+
+  def resolve
+    scope.where(organization: user.organization)
+  end
+end

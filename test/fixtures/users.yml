@@ -18,3 +18,10 @@ admin:
   password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
   location: one
   role: :admin
+
+producer:
+  organization: one
+  email: producer@example.com
+  password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
+  location: one
+  role: :producer
