@@ -11,13 +11,15 @@ class UserTest < ActiveSupport::TestCase
     ActsAsTenant.current_tenant = nil
   end
 
-  test "should scope posts to the current tenant" do
+  test "should scope users to the current tenant" do
     ActsAsTenant.current_tenant = @org_one
-    assert_equal 1, User.count
+    assert_includes(User.all, users(:one))
+    assert_not_includes(User.all, users(:two))
     assert_equal @org_one.id, User.first.organization_id
 
     ActsAsTenant.current_tenant = @org_two
-    assert_equal 1, User.count
+    assert_includes(User.all, users(:two))
+    assert_not_includes(User.all, users(:one))
     assert_equal @org_two.id, User.first.organization_id
   end
 

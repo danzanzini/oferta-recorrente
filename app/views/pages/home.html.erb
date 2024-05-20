@@ -1,6 +1,8 @@
 Oi! Você está na tela inicial do sistema.
 
-<p><%= link_to users_path do %>Manage Users<% end %></p>
+<% if policy(User).create? %>
+  <p><%= link_to users_path do %>Manage Users<% end %></p>
+<% end %>
 <p><%= link_to locations_path do %>Manage Locations<% end %></p>
 <p><%= link_to products_path do %>Manage Products<% end %></p>
 <p><%= link_to offerings_path do %>Manage Offerings<% end %></p>
