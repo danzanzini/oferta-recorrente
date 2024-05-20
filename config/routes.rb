@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resource :session, only: %i[new create destroy]
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
 end
