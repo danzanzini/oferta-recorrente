@@ -17,6 +17,19 @@ def populate_for_development
   User.create!(email: 'admin@example.com',
                password: 'password',
                password_confirmation: 'password',
+               role: :admin,
+               organization_id: org.id)
+
+  User.create!(email: 'supporter@example.com',
+               password: 'password',
+               password_confirmation: 'password',
+               role: :supporter,
+               organization_id: org.id)
+
+  User.create!(email: 'producer@example.com',
+               password: 'password',
+               password_confirmation: 'password',
+               role: :producer,
                organization_id: org.id)
 
   puts 'Creating Locations...'
