@@ -16,6 +16,7 @@ class OfferingsController < ApplicationController
   def new
     @offering = Offering.new
     @offering.offered_products.build
+    authorize @offering
   end
 
   # GET /offerings/1/edit
@@ -25,6 +26,7 @@ class OfferingsController < ApplicationController
   def create
     @offering = Offering.new(offering_params)
     @offering.organization = current_organization
+    authorize @offering
 
     respond_to do |format|
       if @offering.save
@@ -64,6 +66,7 @@ class OfferingsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_offering
     @offering = Offering.find(params[:id])
+    authorize @offering
   end
 
   # Only allow a list of trusted parameters through.

@@ -3,7 +3,7 @@ require "test_helper"
 class OfferingsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @offering = offerings(:one)
-    log_in_as(users(:one))
+    log_in_as(users(:admin))
   end
 
   test "should get index" do
