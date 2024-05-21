@@ -5,11 +5,6 @@ class HarvestsController < ApplicationController
   before_action :set_current_offering, only: %i[new create edit update]
   before_action :set_harvest, only: %i[show edit update]
 
-  # GET /harvests or /harvests.json
-  def index
-    @harvests = Harvest.all
-  end
-
   # GET /harvests/1 or /harvests/1.json
   def show; end
 
@@ -17,6 +12,7 @@ class HarvestsController < ApplicationController
   def new
     @harvest = Harvest.new
     @harvest.harvested_products.build
+    authorize(@harvest)
   end
 
   # GET /harvests/1/edit
@@ -27,6 +23,7 @@ class HarvestsController < ApplicationController
     @harvest = Harvest.new(harvest_params)
     @harvest.user = current_user
     @harvest.offering = @current_offering
+    authorize(@harvest)
 
     respond_to do |format|
       if @harvest.save
@@ -57,11 +54,11 @@ class HarvestsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_harvest
     @harvest = Harvest.find(params[:id])
+    authorize(@harvest)
   end
 
-  # Only allow a list of trusted parameters through.
   def harvest_params
-    params.require(:harvest).permit(harvested_products_attributes: %i[offered_product_id amount _destroy])
+    params.require(:harvest).permit(harvested_products_attributes: %i[id offered_product_id amount _destroy])
   end
 
   def set_current_offering

@@ -28,8 +28,4 @@ class OfferingPolicy < ApplicationPolicy
   def destroy?
     user.admin? || user.producer?
   end
-
-  def resolve
-    scope.where(organization: user.organization)
-  end
 end

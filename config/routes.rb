@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :harvests, except: :destroy
+  resources :harvests, except: %i[index destroy]
   resources :offerings
   resources :locations
   resources :products, except: :destroy

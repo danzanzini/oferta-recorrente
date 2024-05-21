@@ -6,7 +6,7 @@ class HarvestsHelperTest < ActionView::TestCase
     @user = users(:one)
   end
 
-  test 'returns a new instance if in new action' do
+  test '#harvested_product returns a new instance if in new action' do
     def action_name
       'new'
     end
@@ -15,7 +15,7 @@ class HarvestsHelperTest < ActionView::TestCase
     assert !object.persisted?
   end
 
-  test 'returns existing instance' do
+  test '#harvested_product returns existing instance' do
     def action_name
       'edit'
     end

@@ -3,9 +3,9 @@
 one:
   offering: one
   product: one
-  amount: 1
+  amount: 10
 
 two:
   offering: two
   product: two
-  amount: 1
+  amount: 20
