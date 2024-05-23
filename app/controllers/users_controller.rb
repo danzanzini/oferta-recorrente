@@ -29,9 +29,8 @@ class UsersController < ApplicationController
     @user.organization = current_organization
     @user.password = user_params['email']
     authorize @user
-
     respond_to do |format|
-      if @user.save!
+      if @user.save
         format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else

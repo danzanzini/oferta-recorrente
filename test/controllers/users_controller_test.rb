@@ -8,8 +8,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
   end
 
-  def user_params
-    { user: { email: 'new_email@example.com', password: 'password', password_confirmation: 'password', role: :admin } }
+  def valid_user_params
+    { user: { email: 'new_email@example.com', role: :admin } }
+  end
+
+  def invalid_user_params
+    { user: { email: 'new_email@example.com' } }
   end
 
   test 'should get index' do
@@ -24,11 +28,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create user' do
     assert_difference('User.count') do
-      post users_url,
-           params: user_params
+      post users_url, params: valid_user_params
     end
 
     assert_redirected_to user_url(User.last)
+  end
+
+  test 'should not create user when invalid' do
+    assert_no_difference('User.count') do
+      post users_url, params: invalid_user_params
+    end
+
+    assert_response :unprocessable_entity
   end
 
   test 'should show user' do
@@ -44,6 +55,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should update user' do
     patch user_url(@user), params: { user: { email: 'teste@example.com' } }
     assert_redirected_to user_url(@user)
+  end
+
+  test 'should not update user when invalid' do
+    patch user_url(@user), params: { user: { email: nil } }
+    assert_response :unprocessable_entity
   end
 
   test 'should destroy user' do
