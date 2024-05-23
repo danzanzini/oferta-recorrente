@@ -14,15 +14,15 @@ class OfferingPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin? || user.producer?
+    create?
   end
 
   def update?
-    user.admin? || user.producer?
+    (user.admin? || user.producer?) && record.before_opening?
   end
 
   def edit?
-    user.admin? || user.producer?
+    update?
   end
 
   def destroy?

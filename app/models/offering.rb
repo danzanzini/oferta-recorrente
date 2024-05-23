@@ -15,7 +15,22 @@ class Offering < ApplicationRecord
       .where('closes_at >= ?', Time.zone.now)
   }
 
+  validates :opens_at, :closes_at, presence: true
+  validate :closes_after_opening?
+
   def open?(now)
     opens_at <= now && closes_at >= now
+  end
+
+  def before_opening?
+    opens_at > Time.now
+  end
+
+  private
+
+  def closes_after_opening?
+    return unless closes_at < opens_at
+
+    errors.add(:closes_at, 'Must be after opens_at')
   end
 end

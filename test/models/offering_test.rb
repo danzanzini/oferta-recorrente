@@ -25,4 +25,17 @@ class OfferingTest < ActiveSupport::TestCase
     @offering.opens_at = now + 1.hour
     assert !@offering.open?(now)
   end
+
+  test '#before_opening?' do
+    @offering.opens_at = Time.now + 1.hour
+
+    assert @offering.before_opening?
+  end
+
+  test 'it is invalid if closes before opens_at' do
+    @offering.closes_at = @offering.opens_at - 1.hour
+
+    assert_not @offering.valid?
+    assert_includes @offering.errors[:closes_at], "Must be after opens_at"
+  end
 end

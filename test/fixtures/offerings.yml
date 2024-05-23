@@ -32,3 +32,8 @@ closed_future:
   location: one
   organization: one
 
+not_open_yet:
+  opens_at: <%= 1.day.from_now %> %>
+  closes_at: <%= 2.day.from_now %>
+  location: one
+  organization: one
