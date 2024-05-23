@@ -8,6 +8,8 @@ class User < ApplicationRecord
   acts_as_tenant :organization
   validates_uniqueness_to_tenant :email
 
+  validates :email, presence: true
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -20,6 +22,7 @@ class User < ApplicationRecord
   has_many :harvests
   belongs_to :location, optional: true
   delegate :current_offering, to: :location, allow_nil: false
+  validates :location_id, presence: true, if: :supporter?
 
   def current_harvest
     harvests.current.last
