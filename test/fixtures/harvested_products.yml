@@ -4,8 +4,10 @@ one:
   amount: 1
   harvest: one
   offered_product: one
+  organization: one
 
 two:
   amount: 1
   harvest: two
   offered_product: two
+  organization: two

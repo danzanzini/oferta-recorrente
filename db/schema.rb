@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_24_124916) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +20,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_124916) do
     t.bigint "offered_product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
     t.index ["harvest_id"], name: "index_harvested_products_on_harvest_id"
     t.index ["offered_product_id"], name: "index_harvested_products_on_offered_product_id"
+    t.index ["organization_id"], name: "index_harvested_products_on_organization_id"
   end
 
   create_table "harvests", force: :cascade do |t|
@@ -106,6 +108,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_124916) do
 
   add_foreign_key "harvested_products", "harvests"
   add_foreign_key "harvested_products", "offered_products"
+  add_foreign_key "harvested_products", "organizations"
   add_foreign_key "harvests", "offerings"
   add_foreign_key "harvests", "users"
   add_foreign_key "locations", "organizations"
