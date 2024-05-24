@@ -11,6 +11,13 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
     @offered_two = offered_products(:two)
   end
 
+  def create_harvest
+    Harvest.create!(
+      offering: offerings(:open),
+      user: @user,
+    )
+  end
+
   def valid_params(offered_product)
     { harvest: { harvested_products_attributes: [{ offered_product_id: offered_product.id, amount: 2 }] } }
   end
@@ -41,22 +48,26 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show harvest' do
-    get harvest_url(@harvest)
+    harvest = create_harvest
+    get harvest_url(harvest)
     assert_response :success
   end
 
   test 'should get edit' do
-    get edit_harvest_url(@harvest)
+    harvest = create_harvest
+    get edit_harvest_url(harvest)
     assert_response :success
   end
 
   test 'should update harvest' do
-    patch harvest_url(@harvest), params: valid_params(@offered_two)
-    assert_redirected_to harvest_url(@harvest)
+    harvest = create_harvest
+    patch harvest_url(harvest), params: valid_params(@offered_two)
+    assert_redirected_to harvest_url(harvest)
   end
 
   test 'should not update harvest when invalid' do
-    patch harvest_url(@harvest), params: invalid_params
+    harvest = create_harvest
+    patch harvest_url(harvest), params: invalid_params
 
     assert_response :unprocessable_entity
   end

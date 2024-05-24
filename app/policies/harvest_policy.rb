@@ -7,7 +7,7 @@ class HarvestPolicy < ApplicationPolicy
   end
 
   def create?
-    user.supporter? && user.current_offering
+    user.supporter? && user.current_offering && !user.current_harvest
   end
 
   def new?
@@ -15,7 +15,7 @@ class HarvestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.supporter?
+    user.supporter? && user.current_harvest&.id == record.id
   end
 
   def edit?
