@@ -4,9 +4,15 @@ class OfferedProduct < ApplicationRecord
   belongs_to :offering
   belongs_to :product
   has_many :harvested_products
+  acts_as_tenant :organization
+
+  before_validation :add_organization
 
   delegate :name, to: :product, prefix: true
 
-  # TODO: Solve bug when trying to save an offering with acts_as_tenant
-  # acts_as_tenant :organization, through: :offering
+  private
+
+  def add_organization
+    self.organization_id ||= offering.organization_id
+  end
 end

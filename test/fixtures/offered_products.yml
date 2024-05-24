@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  organization: one
   offering: one
   product: one
   amount: 10
 
 two:
+  organization: two
   offering: two
   product: two
   amount: 20

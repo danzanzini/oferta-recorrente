@@ -2,7 +2,6 @@
 
 class Offering < ApplicationRecord
   belongs_to :location
-  belongs_to :organization
   acts_as_tenant :organization
 
   has_many :offered_products, dependent: :destroy, inverse_of: :offering

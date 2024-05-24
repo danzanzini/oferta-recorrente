@@ -8,8 +8,13 @@ class OfferingsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(users(:admin))
 
     def valid_offering_params
-      { offering: { closes_at: @offering.closes_at, harvest_at: @offering.harvest_at, location_id: @offering.location_id,
-                    opens_at: @offering.opens_at } }
+      { offering: {
+        opens_at: Time.now + 1.hour,
+        closes_at: Time.now + 12.hour,
+        harvest_at: @offering.harvest_at,
+        location_id: @offering.location_id,
+        offered_products_attributes: [{ product_id: products(:one).id, amount: 30 }]
+      } }
     end
 
     def invalid_offering_params
