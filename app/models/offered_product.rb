@@ -10,6 +10,9 @@ class OfferedProduct < ApplicationRecord
 
   delegate :name, to: :product, prefix: true
 
+  validates :product_id, uniqueness: { scope: :offering_id }
+  validates :amount, numericality: { greater_than: 0 }
+
   private
 
   def add_organization
