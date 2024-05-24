@@ -12,9 +12,12 @@ class HarvestedProduct < ApplicationRecord
 
   scope :from_user, ->(user) { joins(:harvest).where(harvests: { user: }).last }
 
+  validates :offered_product_id, uniqueness: { scope: :harvest_id }
+  validates :amount, numericality: { greater_than: 0 }
+
   private
 
   def set_organization
-    self.organization_id = offered_product.organization_id
+    self.organization_id = offered_product&.organization_id
   end
 end

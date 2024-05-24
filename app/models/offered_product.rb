@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class OfferedProduct < ApplicationRecord
+  acts_as_tenant :organization
   belongs_to :offering
   belongs_to :product
   has_many :harvested_products
-  acts_as_tenant :organization
 
   before_validation :add_organization
 
