@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  link: MyString
-  address: MyString
+  name: Casa Forte
+  pickup_place: Empório Pura Vida
+  link: instagram.com/casa-forte
+  address: Av. Dezessete de Agosto
   organization: one
 
 two:
-  name: MyString
-  link: MyString
-  address: MyString
+  name: Graças
+  pickup_place: Empório Adega
+  link: instagram.com/gracas
+  address: Av. Dezoito de Maio
   organization: two
