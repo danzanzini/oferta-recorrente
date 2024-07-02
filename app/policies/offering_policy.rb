@@ -28,4 +28,8 @@ class OfferingPolicy < ApplicationPolicy
   def destroy?
     user.admin? || user.producer?
   end
+
+  def print?
+    user.admin? || user.producer?
+  end
 end

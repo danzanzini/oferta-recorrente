@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Abacate
   description: MyString
   main_usage: MyString
   organization: one
 
 two:
-  name: MyString
+  name: Laranja
   description: MyString
   main_usage: MyString
   organization: two

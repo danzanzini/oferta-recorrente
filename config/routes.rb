@@ -2,7 +2,11 @@
 
 Rails.application.routes.draw do
   resources :harvests, except: %i[index destroy]
-  resources :offerings
+  resources :offerings do
+    member do
+      get :print
+    end
+  end
   resources :locations
   resources :products, except: :destroy
   resources :users

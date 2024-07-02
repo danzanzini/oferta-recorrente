@@ -7,7 +7,7 @@ one:
   organization: one
 
 two:
-  amount: 1
+  amount: 2
   harvest: two
   offered_product: two
   organization: two

@@ -2,7 +2,7 @@
 
 class OfferingsController < ApplicationController
   before_action :require_login
-  before_action :set_offering, only: %i[ show edit update destroy ]
+  before_action :set_offering, only: %i[show edit update destroy print]
 
   # GET /offerings or /offerings.json
   def index
@@ -62,7 +62,12 @@ class OfferingsController < ApplicationController
     end
   end
 
+  def print
+    @harvests = @offering.harvests
+  end
+
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_offering
     @offering = Offering.find(params[:id])
