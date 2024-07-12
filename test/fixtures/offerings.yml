@@ -37,3 +37,6 @@ not_open_yet:
   closes_at: <%= 2.day.from_now %>
   location: one
   organization: one
+  
+
+

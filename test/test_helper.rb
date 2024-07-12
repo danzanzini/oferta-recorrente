@@ -1,9 +1,10 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start('rails')
+# SimpleCov.start('rails') { enable_coverage_for_eval }
 
-ENV["RAILS_ENV"] ||= "test"
-require_relative "../config/environment"
-require "rails/test_help"
+ENV['RAILS_ENV'] ||= 'test'
+require_relative '../config/environment'
+require 'rails/test_help'
 require 'minitest/autorun'
 
 module ActiveSupport

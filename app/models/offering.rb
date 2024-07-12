@@ -5,6 +5,7 @@ class Offering < ApplicationRecord
   acts_as_tenant :organization
 
   has_many :harvests, dependent: :destroy, inverse_of: :offering
+  has_many :harvested_products, through: :harvests
   has_many :offered_products, dependent: :destroy, inverse_of: :offering
   has_many :products, through: :offered_products
 
@@ -24,6 +25,12 @@ class Offering < ApplicationRecord
 
   def before_opening?
     opens_at > Time.now
+  end
+
+  def total_harvested
+    harvested_products.joins(:product)
+                      .group('products.name').order('products.name')
+                      .sum('harvested_products.amount')
   end
 
   private

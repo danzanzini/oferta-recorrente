@@ -5,5 +5,5 @@ one:
   user: one
 
 two:
-  offering: two
+  offering: one
   user: two

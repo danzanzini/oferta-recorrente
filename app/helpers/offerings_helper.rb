@@ -3,6 +3,12 @@ module OfferingsHelper
     harvest.harvested_products.map { |hp| to_string(hp) }.join(', ')
   end
 
+  def total_harvested(offering)
+    offering.total_harvested.map do |k, v|
+      "#{k} (#{v})"
+    end.join(', ')
+  end
+
   private
 
   def to_string(harvested_product)

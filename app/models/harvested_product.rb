@@ -4,6 +4,7 @@ class HarvestedProduct < ApplicationRecord
   acts_as_tenant :organization
   belongs_to :harvest
   belongs_to :offered_product
+  has_one :product, through: :offered_product
   has_one :user, through: :harvest
 
   before_validation :set_organization

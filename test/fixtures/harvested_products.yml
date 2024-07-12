@@ -8,6 +8,18 @@ one:
 
 two:
   amount: 2
+  harvest: one
+  offered_product: two
+  organization: one
+
+three:
+  amount: 1
+  harvest: two
+  offered_product: one
+  organization: one
+
+four:
+  amount: 2
   harvest: two
   offered_product: two
-  organization: two
+  organization: one
