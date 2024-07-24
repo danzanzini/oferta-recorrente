@@ -19,5 +19,3 @@ Oi! Você está na tela inicial do sistema.
 <% if policy(Harvest).create? %>
   <p><%= harvest_link(@current_harvest) %></p>
 <% end %>
-
-<%= button_to 'Logout', logout_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' } %>
