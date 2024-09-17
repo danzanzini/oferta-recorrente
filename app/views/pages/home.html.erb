@@ -1,21 +1,40 @@
 Oi! Você está na tela inicial do sistema.
 
-<% if policy(User).create? %>
-  <p><%= link_to users_path do %>Manage Users<% end %></p>
-<% end %>
-
-<% if policy(Location).create? %>
-  <p><%= link_to locations_path do %>Manage Locations<% end %></p>
-<% end %>
-
-<% if policy(Product).index? %>
-  <p><%= link_to products_path do %>Manage Products<% end %></p>
-<% end %>
-
-<% if policy(Offering).index? %>
-  <p><%= link_to offerings_path do %>Manage Offerings<% end %></p>
-<% end %>
-
-<% if policy(Harvest).create? %>
-  <p><%= harvest_link(@current_harvest) %></p>
-<% end %>
+<section class="flex overflow-hidden flex-col bg-stone-50 text-teal-950">
+  <div class="flex flex-col w-full bg-white bg-opacity-50 max-md:max-w-full">
+    <header>
+      <h1 class="opacity-50">Juliana – Apoiadora</h1>
+    </header>
+    <div class="flex z-10 flex-col mt-0 max-w-full text-6xl font-bold leading-[62px] w-[556px]">
+      <h2 class="z-10 self-end w-[321px] max-md:text-4xl max-md:leading-10">O que você gostaria de fazer?</h2>
+    </div>
+    <div class="flex z-10 flex-col self-end mt-0 max-w-full w-[833px] max-md:mt-0">
+      <nav class="flex flex-wrap gap-5 max-w-full min-h-[226px] w-[596px]">
+        <% if policy(User).create? %>
+          <%= link_to users_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Users' } %><% end %>
+        <% end %>
+        <% if policy(Location).create? %>
+          <%= link_to locations_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Locations' } %><% end %>
+        <% end %>
+        <% if policy(Offering).index? %>
+          <%= link_to offerings_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Offerings' } %><% end %>
+        <% end %>
+        <% if policy(Product).index? %>
+          <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Products' } %><% end %>
+        <% end %>
+        <% if policy(Harvest).create? %>
+          <%= link_to current_harvest_path(@current_harvest) do %><%= render partial: 'article', locals: { call_to_action: current_harvest_call_to_action(@current_harvest) } %><% end %>
+        <% end %>
+        <article class="flex flex-col grow shrink min-w-[240px] w-[231px]">
+          <div class="flex flex-col justify-center px-10 py-16 bg-white rounded-xl shadow-[0px_4px_44px_rgba(48,38,226,0.08)] max-md:px-5">
+            <div class="flex flex-col items-center">
+              <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/d6b3a334b650814f89fe003a5f0b1b906ec003b11495f2ef0f22a6d22ed410d5?placeholderIfAbsent=true&apiKey=6ecb5749cca9460bb7f524bdab629711" class="object-contain aspect-square w-[50px]" alt="Ícone de último pedido" />
+              <h2 class="text-xl font-medium text-center">Ver meu último pedido</h2>
+              <p class="text-base leading-4 opacity-50">01.03 – sexta-feira</p>
+            </div>
+          </div>
+        </article>
+      </nav>
+    </div>
+  </div>
+</section>

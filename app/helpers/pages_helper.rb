@@ -1,9 +1,17 @@
 module PagesHelper
-  def harvest_link(harvest)
+  def current_harvest_path(harvest)
     if harvest
-      link_to(edit_harvest_path(harvest.id)) { 'Edit the weekly harvest' }
+      edit_harvest_path(harvest.id)
     else
-      link_to(new_harvest_path) { 'Create new harvest' }
+      new_harvest_path
+    end
+  end
+
+  def current_harvest_call_to_action(harvest)
+    if harvest
+      'Editar pedido realizado'
+    else
+      'Realizar pedido'
     end
   end
 end
