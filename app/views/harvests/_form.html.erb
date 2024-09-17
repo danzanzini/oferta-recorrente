@@ -11,19 +11,53 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :harvested_products, style: "display: block" %>
-    <% @current_offering.offered_products.each do |offered| %>
-      <p><%= "#{offered.product_name}: #{offered.amount}" %></p>
-      <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
-        <%= harvested_fields.label :amount %>
-        <%= harvested_fields.text_field :amount %>
-        <%= harvested_fields.hidden_field :offered_product_id %>
-      <% end %>
-    <% end %>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-left text-gray-600 font-semibold">
+    <div>Produto</div>
+    <div>Disponível</div>
+    <div>Quantidade a pedir</div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="space-y-4">
+    <%= form.label :harvested_products, style: "display: block" %>
+    <% @current_offering.offered_products.each do |offered| %>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+        <div class="flex items-center">
+          <%= offered.product_name %>
+        </div>
+        <div><%= offered.amount %></div>
+        <div>
+          <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
+            <%= harvested_fields.text_field :amount %>
+            <%= harvested_fields.hidden_field :offered_product_id %>
+          <% end %>
+        </div>
+      </div>
+    <% end %> 
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+        <div class="flex items-center">
+            Abacate
+        </div>
+        <div>0</div>
+        <div class="text-gray-400">Encerrado</div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+        <div class="flex items-center">
+            Acelga
+        </div>
+        <div>16</div>
+        <div>
+            <button class="text-green-600 font-bold text-xl">+</button>
+        </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+    <div>
+        <div class="bg-gray-200 rounded px-2 py-1 text-sm inline-block">0 de 8</div>
+    </div>
+    <div>
+        <%= form.submit class: "bg-green-700 text-white px-4 py-1 rounded" %>
+    </div>
   </div>
 <% end %>

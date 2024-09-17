@@ -11,20 +11,23 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header>
-      <nav class="bg-gray-800 p-4">
-        <ul class="flex space-x-4">
-          <li><%= link_to('Home', root_path, { class: 'text-white' })  %></li>
-          <li>
-            <%= button_to('Logout', logout_path, { class: 'text-white', method: :delete}) %>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <header class="flex justify-between items-center mb-8">
+        <%= link_to root_path do %>
+          <h1 class="text-xl font-bold">CSA Recife</h1>
+        <% end %>
+        <nav>
+          <ul class="flex space-x-4">
+            <li><button class="px-4 py-2 text-gray-600 hover:text-gray-800">Gerenciar ▼</button></li>
+            <li><button class="px-4 py-2 text-gray-600 hover:text-gray-800">Minhas Oferendas ▼</button></li>
+            <li><%= button_to('Logout', logout_path, { class: 'px-4 py-2 text-gray-600 hover:text-gray-800', method: :delete}) %></li>
+          </ul>
+        </nav>
+      </header>
+      <main class="container mx-auto mt-28 px-5 flex">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
