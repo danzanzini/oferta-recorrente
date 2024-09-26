@@ -1,5 +1,3 @@
-Oi! Você está na tela inicial do sistema.
-
 <section class="flex overflow-hidden flex-col bg-stone-50 text-teal-950">
   <div class="flex flex-col w-full bg-white bg-opacity-50 max-md:max-w-full">
     <header>
@@ -22,7 +20,7 @@ Oi! Você está na tela inicial do sistema.
         <% if policy(Product).index? %>
           <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Products' } %><% end %>
         <% end %>
-        <% if policy(Harvest).create? %>
+        <% if policy(Harvest).create? || policy(@current_harvest).update? %>
           <%= link_to current_harvest_path(@current_harvest) do %><%= render partial: 'article', locals: { call_to_action: current_harvest_call_to_action(@current_harvest) } %><% end %>
         <% end %>
         <article class="flex flex-col grow shrink min-w-[240px] w-[231px]">
