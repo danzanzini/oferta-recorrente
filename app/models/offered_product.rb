@@ -13,6 +13,10 @@ class OfferedProduct < ApplicationRecord
   validates :product_id, uniqueness: { scope: :offering_id }
   validates :amount, numericality: { greater_than: 0 }
 
+  def available_amount
+    amount - harvested_products.sum(:amount)
+  end
+
   private
 
   def add_organization

@@ -23,7 +23,7 @@
         <div class="flex items-center">
           <%= offered.product_name %>
         </div>
-        <div><%= offered.amount %></div>
+        <div><%= offered.available_amount %></div>
         <div data-controller="counter">
           <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
             <button type="button" data-action="click->counter#decrement" data-counter-target="button" class="text-green-600 font-bold text-xl">-</button>

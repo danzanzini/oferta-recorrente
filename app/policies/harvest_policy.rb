@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
+# Policy for managing harvest actions
 class HarvestPolicy < ApplicationPolicy
-
   def show?
     user.supporter?
   end

@@ -20,7 +20,7 @@
         <% if policy(Product).index? %>
           <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Manage Products' } %><% end %>
         <% end %>
-        <% if policy(Harvest).create? || policy(@current_harvest).update? %>
+        <% if policy(Harvest).create? || @current_harvest && policy(@current_harvest).update? %>
           <%= link_to current_harvest_path(@current_harvest) do %><%= render partial: 'article', locals: { call_to_action: current_harvest_call_to_action(@current_harvest) } %><% end %>
         <% end %>
         <article class="flex flex-col grow shrink min-w-[240px] w-[231px]">
