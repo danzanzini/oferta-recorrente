@@ -12,33 +12,35 @@
   <% end %>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-left text-gray-600 font-semibold">
-    <div>Produto</div>
+    <div><%= form.label :harvested_products, style: "display: block" %></div>
     <div>Disponível</div>
     <div>Quantidade a pedir</div>
   </div>
 
   <div class="space-y-4">
-    <%= form.label :harvested_products, style: "display: block" %>
     <% @current_offering.offered_products.each do |offered| %>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
         <div class="flex items-center">
           <%= offered.product_name %>
         </div>
         <div><%= offered.amount %></div>
-        <div>
+        <div data-controller="counter">
           <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
-            <%= harvested_fields.text_field :amount %>
+            <button type="button" data-action="click->counter#decrement" data-counter-target="button" class="text-green-600 font-bold text-xl">-</button>
+            <%= harvested_fields.text_field :amount, data: { counter_target: "input" }, class: 'input-disabled' %>
+            <button type="button" data-action="click->counter#increment" data-counter-target="button" class="text-green-600 font-bold text-xl">+</button>
             <%= harvested_fields.hidden_field :offered_product_id %>
           <% end %>
         </div>
       </div>
-    <% end %> 
+    <% end %>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
         <div class="flex items-center">
             Abacate
         </div>
         <div>0</div>
-        <div class="text-gray-400">Encerrado</div>
+        <div class="text-gray-400">Esgotado</div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
