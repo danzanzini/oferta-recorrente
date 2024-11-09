@@ -19,12 +19,12 @@
 
   <div class="space-y-4">
     <% @current_offering.offered_products.each do |offered| %>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200" data-controller="counter">
         <div class="flex items-center">
           <%= offered.product_name %>
         </div>
-        <div><%= offered.available_amount %></div>
-        <div data-controller="counter">
+        <div data-counter-target="available"><%= offered.available_amount %></div>
+        <div>
           <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
             <button type="button" data-action="click->counter#decrement" data-counter-target="button" class="text-green-600 font-bold text-xl">-</button>
             <%= harvested_fields.text_field :amount, data: { counter_target: "input" }, class: 'input-disabled' %>

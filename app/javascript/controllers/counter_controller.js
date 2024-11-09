@@ -1,30 +1,40 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input"]
+  static targets = ["input", "available"]
 
   connect() {
-    // Initialize the counter value if needed
   }
 
   increment() {
-    const input = this.inputTarget
-    let value = parseInt(input.value) || 0
-    input.value = value + 1
-    this.updateAvailability()
-  }
-
-  decrement() {
-    const input = this.inputTarget
-    let value = parseInt(input.value) || 0
-    if (value > 0) {
-      input.value = value - 1
-      this.updateAvailability()
+    if (this.canIncrement(this.availableTarget)) {
+      this.updateInputValue(this.inputTarget, 1)
+      this.updateAvailableValue(this.availableTarget, -1)
     }
   }
 
-  updateAvailability() {
-    // You can add logic here to update the availability or perform other actions
-    // This method is called after each increment or decrement
+  decrement() {
+    if (this.canDecrement(this.inputTarget)) {
+      this.updateInputValue(this.inputTarget, -1)
+      this.updateAvailableValue(this.availableTarget, 1)
+    }
+  }
+
+  canIncrement(available) {
+    return parseInt(available.textContent) > 0
+  }
+
+  canDecrement(input) {
+    return parseInt(input.value) > 0
+  }
+
+  updateInputValue(input, delta) {
+    let value = parseInt(input.value) || 0
+    input.value = value + delta
+  }
+
+  updateAvailableValue(available, delta) {
+    let value = parseInt(available.textContent) || 0
+    available.textContent = value + delta
   }
 }
