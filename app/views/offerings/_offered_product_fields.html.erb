@@ -1,14 +1,14 @@
 <div class="nested-form-wrapper data-new-record="<%= form.object.new_record? %>>
-  <div class="field">
-    <%= form.label :product_id, "Product" %>
-    <%= form.collection_select :product_id, Product.all, :id, :name, prompt: "Select a product" %>
+  <div class="form-field">
+    <%= form.label :product_id, "Produto", class: "form-label" %>
+    <%= form.collection_select :product_id, Product.all, :id, :name, prompt: "Selecione um produto" %>
   </div>
 
-  <div class="field">
-    <%= form.label :amount %>
+  <div class="form-field">
+    <%= form.label :amount, "Quantidade", class: "form-label" %>
     <%= form.number_field :amount %>
   </div>
 
-  <%= button_tag 'Remove', type: 'button', data: { action: 'nested-form#remove' } %>
+  <%= button_tag 'Remover', type: 'button', data: { action: 'nested-form#remove' }, class: "btn-danger text-sm" %>
   <%= form.hidden_field :_destroy %>
 </div>

@@ -1,9 +1,7 @@
-<h1>New location</h1>
-
-<%= render "form", location: @location %>
-
-<br>
-
-<div>
-  <%= link_to "Back to locations", locations_path %>
+<div class="card">
+  <h1 class="page-title">Novo local de retirada</h1>
+  <%= render "form", location: @location %>
+  <div class="mt-4">
+    <%= link_to "Voltar", locations_path, class: "link-plain" %>
+  </div>
 </div>

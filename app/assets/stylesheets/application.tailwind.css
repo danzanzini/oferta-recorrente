@@ -4,6 +4,50 @@
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-4 bg-main-1 text-white rounded;
+    @apply py-2 px-4 bg-main-1 text-white rounded hover:bg-main-2 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply py-2 px-4 border border-main-1 text-main-1 rounded hover:bg-color-transparency-0 transition-colors;
+  }
+
+  .btn-danger {
+    @apply py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors;
+  }
+
+  .notice {
+    @apply text-main-1 font-medium mb-4;
+  }
+
+  .alert {
+    @apply text-red-600 font-medium mb-4;
+  }
+
+  .error-box {
+    @apply bg-red-50 border border-red-200 rounded-lg p-4 mb-4 text-red-600 text-sm;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold text-main-2 mb-6;
+  }
+
+  .card {
+    @apply bg-neutral-0 rounded-lg shadow-sm border border-color-border p-6;
+  }
+
+  .form-field {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-neutral-3 mb-1;
+  }
+
+  .link {
+    @apply text-main-1 hover:text-main-2 underline-offset-2 hover:underline;
+  }
+
+  .link-plain {
+    @apply text-neutral-3 hover:text-main-2;
   }
 }

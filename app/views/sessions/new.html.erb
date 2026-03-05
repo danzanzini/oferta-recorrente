@@ -1,23 +1,23 @@
-<h1>Login</h1>
+<div class="card max-w-md mx-auto mt-12">
+  <h1 class="page-title">Entrar</h1>
 
-<%= form_with(scope: :session, url: session_path, local: true) do |form| %>
-  <% if flash[:alert] %>
-    <div class="alert alert-danger">
-      <%= flash[:alert] %>
+  <%= form_with(scope: :session, url: session_path, local: true) do |form| %>
+    <% if flash[:alert] %>
+      <p class="alert mb-4"><%= flash[:alert] %></p>
+    <% end %>
+
+    <div class="form-field">
+      <%= form.label :email, class: "form-label" %>
+      <%= form.email_field :email, id: :session_email %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :password, "Senha", class: "form-label" %>
+      <%= form.password_field :password, id: :session_password %>
+    </div>
+
+    <div class="mt-6">
+      <%= form.submit "Entrar", class: "btn-primary w-full" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email, id: :session_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password, id: :session_password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "Login" %>
-  </div>
-<% end %>
+</div>

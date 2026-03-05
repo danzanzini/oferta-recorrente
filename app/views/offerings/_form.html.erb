@@ -4,10 +4,9 @@
   data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }
 ) do |form| %>
   <% if offering.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
-
-      <ul>
+    <div class="error-box">
+      <h2 class="font-semibold mb-2"><%= pluralize(offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
+      <ul class="list-disc list-inside">
         <% offering.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -15,27 +14,27 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :opens_at, style: "display: block" %>
+  <div class="form-field">
+    <%= form.label :opens_at, class: "form-label" %>
     <%= form.datetime_field :opens_at %>
   </div>
 
-  <div>
-    <%= form.label :closes_at, style: "display: block" %>
+  <div class="form-field">
+    <%= form.label :closes_at, class: "form-label" %>
     <%= form.datetime_field :closes_at %>
   </div>
 
-  <div>
-    <%= form.label :harvest_at, style: "display: block" %>
+  <div class="form-field">
+    <%= form.label :harvest_at, class: "form-label" %>
     <%= form.date_field :harvest_at %>
   </div>
 
-  <div>
-    <%= form.label :location_id, style: "display: block" %>
+  <div class="form-field">
+    <%= form.label :location_id, class: "form-label" %>
     <%= form.collection_select(:location_id, Location.all, :id, :name) %>
   </div>
 
-  <h3>Offered Products</h3>
+  <h3 class="text-lg font-semibold text-main-2 mb-3 mt-6">Produtos oferecidos</h3>
   <template data-nested-form-target="template">
     <%= form.fields_for :offered_products, OfferedProduct.new(offering: offering), child_index: 'NEW_RECORD' do |offered_product_fields| %>
       <%= render "offered_product_fields", form: offered_product_fields %>
@@ -48,11 +47,11 @@
 
   <div data-nested-form-target="target"></div>
 
-  <div class="links">
-    <%= button_tag 'Add Product', type: 'button', data: { action: 'nested-form#add' } %>
+  <div class="mt-2">
+    <%= button_tag 'Adicionar produto', type: 'button', data: { action: 'nested-form#add' }, class: "btn-secondary text-sm" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mt-6">
+    <%= form.submit class: "btn-primary" %>
   </div>
 <% end %>

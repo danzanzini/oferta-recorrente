@@ -1,9 +1,9 @@
 <%= form_with(model: harvest) do |form| %>
   <% if harvest.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(harvest.errors.count, "error") %> prohibited this harvest from being saved:</h2>
+    <div class="error-box">
+      <h2 class="font-semibold mb-2"><%= pluralize(harvest.errors.count, "error") %> prohibited this harvest from being saved:</h2>
 
-      <ul>
+      <ul class="list-disc list-inside">
         <% harvest.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-left text-gray-600 font-semibold">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-left text-neutral-3 font-semibold">
     <div><%= form.label :harvested_products, style: "display: block" %></div>
     <div>Disponível</div>
     <div>Quantidade a pedir</div>
@@ -19,47 +19,47 @@
 
   <div class="space-y-4">
     <% @current_offering.offered_products.each do |offered| %>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200" data-controller="counter">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border" data-controller="counter">
         <div class="flex items-center">
           <%= offered.product_name %>
         </div>
         <div data-counter-target="available"><%= offered.available_amount %></div>
         <div>
           <%= form.fields_for :harvested_products, harvested_product(offered, current_user) do |harvested_fields| %>
-            <button type="button" data-action="click->counter#decrement" data-counter-target="button" class="text-green-600 font-bold text-xl">-</button>
+            <button type="button" data-action="click->counter#decrement" data-counter-target="button" class="text-main-1 font-bold text-xl">-</button>
             <%= harvested_fields.text_field :amount, data: { counter_target: "input" }, class: 'input-disabled' %>
-            <button type="button" data-action="click->counter#increment" data-counter-target="button" class="text-green-600 font-bold text-xl">+</button>
+            <button type="button" data-action="click->counter#increment" data-counter-target="button" class="text-main-1 font-bold text-xl">+</button>
             <%= harvested_fields.hidden_field :offered_product_id %>
           <% end %>
         </div>
       </div>
     <% end %>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
         <div class="flex items-center">
             Abacate
         </div>
         <div>0</div>
-        <div class="text-gray-400">Esgotado</div>
+        <div class="text-neutral-3 opacity-50">Esgotado</div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
         <div class="flex items-center">
             Acelga
         </div>
         <div>16</div>
         <div>
-            <button class="text-green-600 font-bold text-xl">+</button>
+            <button class="text-main-1 font-bold text-xl">+</button>
         </div>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-gray-200">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
     <div>
-        <div class="bg-gray-200 rounded px-2 py-1 text-sm inline-block">0 de 8</div>
+        <div class="bg-neutral-2 rounded px-2 py-1 text-sm inline-block text-neutral-3">0 de 8</div>
     </div>
     <div>
-        <%= form.submit class: "bg-green-700 text-white px-4 py-1 rounded" %>
+        <%= form.submit class: "btn-primary" %>
     </div>
   </div>
 <% end %>

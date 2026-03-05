@@ -1,10 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %><p class="notice"><%= notice %></p><% end %>
 
-<%= render @product %>
+<div class="card mb-6">
+  <%= render @product %>
+</div>
 
-<div>
-  <%= link_to "Edit this product", edit_product_path(@product) %> |
-  <%= link_to "Back to products", products_path %>
-
-  <%= button_to "Destroy this product", @product, method: :delete %>
+<div class="flex gap-4 items-center">
+  <%= link_to "Editar", edit_product_path(@product), class: "btn-primary" %>
+  <%= link_to "Voltar", products_path, class: "link-plain" %>
+  <%= button_to "Excluir", @product, method: :delete, class: "btn-danger" %>
 </div>

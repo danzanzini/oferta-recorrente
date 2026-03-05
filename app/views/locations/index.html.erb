@@ -1,14 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %><p class="notice"><%= notice %></p><% end %>
 
-<h1>Locations</h1>
-
-<div id="locations">
-  <% @locations.each do |location| %>
-    <%= render location %>
-    <p>
-      <%= link_to "Show this location", location %>
-    </p>
-  <% end %>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="page-title mb-0">Locais de retirada</h1>
+  <%= link_to "Novo local", new_location_path, class: "btn-primary" %>
 </div>
 
-<%= link_to "New location", new_location_path %>
+<div id="locations" class="space-y-4">
+  <% @locations.each do |location| %>
+    <div class="card">
+      <%= render location %>
+      <%= link_to "Ver", location, class: "link mt-2 inline-block" %>
+    </div>
+  <% end %>
+</div>

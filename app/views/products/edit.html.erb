@@ -1,10 +1,8 @@
-<h1>Editing product</h1>
-
-<%= render "form", product: @product %>
-
-<br>
-
-<div>
-  <%= link_to "Show this product", @product %> |
-  <%= link_to "Back to products", products_path %>
+<div class="card">
+  <h1 class="page-title">Editar produto</h1>
+  <%= render "form", product: @product %>
+  <div class="flex gap-4 mt-4">
+    <%= link_to "Ver", @product, class: "link" %>
+    <%= link_to "Voltar", products_path, class: "link-plain" %>
+  </div>
 </div>

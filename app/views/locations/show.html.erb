@@ -1,10 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %><p class="notice"><%= notice %></p><% end %>
 
-<%= render @location %>
+<div class="card mb-6">
+  <%= render @location %>
+</div>
 
-<div>
-  <%= link_to "Edit this location", edit_location_path(@location) %> |
-  <%= link_to "Back to locations", locations_path %>
-
-  <%= button_to "Destroy this location", @location, method: :delete %>
+<div class="flex gap-4 items-center">
+  <%= link_to "Editar", edit_location_path(@location), class: "btn-primary" %>
+  <%= link_to "Voltar", locations_path, class: "link-plain" %>
+  <%= button_to "Excluir", @location, method: :delete, class: "btn-danger" %>
 </div>

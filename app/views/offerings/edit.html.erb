@@ -1,10 +1,8 @@
-<h1>Editing offering</h1>
-
-<%= render "form", offering: @offering %>
-
-<br>
-
-<div>
-  <%= link_to "Show this offering", @offering %> |
-  <%= link_to "Back to offerings", offerings_path %>
+<div class="card">
+  <h1 class="page-title">Editar oferenda</h1>
+  <%= render "form", offering: @offering %>
+  <div class="flex gap-4 mt-4">
+    <%= link_to "Ver", @offering, class: "link" %>
+    <%= link_to "Voltar", offerings_path, class: "link-plain" %>
+  </div>
 </div>

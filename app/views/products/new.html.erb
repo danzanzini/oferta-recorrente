@@ -1,9 +1,7 @@
-<h1>New product</h1>
-
-<%= render "form", product: @product %>
-
-<br>
-
-<div>
-  <%= link_to "Back to products", products_path %>
+<div class="card">
+  <h1 class="page-title">Novo produto</h1>
+  <%= render "form", product: @product %>
+  <div class="mt-4">
+    <%= link_to "Voltar", products_path, class: "link-plain" %>
+  </div>
 </div>

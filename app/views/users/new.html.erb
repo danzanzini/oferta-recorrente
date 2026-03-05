@@ -1,9 +1,7 @@
-<h1>New user</h1>
-
-<%= render "form", user: @user %>
-
-<br>
-
-<div>
-  <%= link_to "Back to users", users_path %>
+<div class="card">
+  <h1 class="page-title">Novo usuário</h1>
+  <%= render "form", user: @user %>
+  <div class="mt-4">
+    <%= link_to "Voltar", users_path, class: "link-plain" %>
+  </div>
 </div>

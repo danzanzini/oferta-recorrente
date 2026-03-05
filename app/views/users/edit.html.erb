@@ -1,10 +1,8 @@
-<h1>Editing user</h1>
-
-<%= render "form", user: @user %>
-
-<br>
-
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
+<div class="card">
+  <h1 class="page-title">Editar usuário</h1>
+  <%= render "form", user: @user %>
+  <div class="flex gap-4 mt-4">
+    <%= link_to "Ver", @user, class: "link" %>
+    <%= link_to "Voltar", users_path, class: "link-plain" %>
+  </div>
 </div>
