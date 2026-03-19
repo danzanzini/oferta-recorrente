@@ -21,6 +21,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'index shows location and item limit for supporters' do
+    get users_url
+    assert_match locations(:one).name, response.body
+    assert_match users(:supporter).item_limit.to_s, response.body
+  end
+
   test 'should get new' do
     get new_user_url
     assert_response :success
