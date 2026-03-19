@@ -31,7 +31,9 @@
 
   <div class="form-field">
     <%= form.label :location_id, class: "form-label" %>
-    <%= form.collection_select(:location_id, Location.all, :id, :name) %>
+    <% locations = current_user.producer? && current_user.managed_locations.any? ?
+         current_user.managed_locations : Location.all %>
+    <%= form.collection_select(:location_id, locations, :id, :name) %>
   </div>
 
   <h3 class="text-lg font-semibold text-main-2 mb-3 mt-6">Produtos oferecidos</h3>

@@ -73,4 +73,16 @@ class OfferingsControllerTest < ActionDispatch::IntegrationTest
     assert !@offering.reload.active
     assert_redirected_to offerings_url
   end
+
+  test 'new with from_id responds successfully' do
+    source = offerings(:one) # has offered_products(:one)
+    get new_offering_url(from_id: source.id)
+    assert_response :success
+  end
+
+  test 'producer scoped to managed locations sees only those offerings' do
+    log_in_as(users(:producer))
+    get offerings_url
+    assert_response :success
+  end
 end

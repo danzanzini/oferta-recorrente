@@ -1,4 +1,9 @@
-<%= form_with(model: harvest) do |form| %>
+<%= form_with(model: harvest,
+  data: {
+    controller: "counter",
+    counter_limit_value: current_user.item_limit
+  }
+) do |form| %>
   <% if harvest.errors.any? %>
     <div class="error-box">
       <h2 class="font-semibold mb-2"><%= pluralize(harvest.errors.count, "error") %> prohibited this harvest from being saved:</h2>
@@ -17,9 +22,9 @@
     <div>Quantidade a pedir</div>
   </div>
 
-  <div class="space-y-4">
+  <div class="space-y-4" data-counter-target="rows">
     <% @current_offering.offered_products.each do |offered| %>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border" data-controller="counter">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border" data-counter-row>
         <div class="flex items-center">
           <%= offered.product_name %>
         </div>
@@ -34,32 +39,20 @@
         </div>
       </div>
     <% end %>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
-        <div class="flex items-center">
-            Abacate
-        </div>
-        <div>0</div>
-        <div class="text-neutral-3 opacity-50">Esgotado</div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
-        <div class="flex items-center">
-            Acelga
-        </div>
-        <div>16</div>
-        <div>
-            <button class="text-main-1 font-bold text-xl">+</button>
-        </div>
-    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center py-3 border-t border-color-border">
     <div>
-        <div class="bg-neutral-2 rounded px-2 py-1 text-sm inline-block text-neutral-3">0 de 8</div>
+      <div class="bg-neutral-2 rounded px-2 py-1 text-sm inline-block text-neutral-3">
+        <span data-counter-target="total">0</span>
+        <% if current_user.item_limit %>
+          de <%= current_user.item_limit %>
+        <% end %>
+        itens selecionados
+      </div>
     </div>
     <div>
-        <%= form.submit class: "btn-primary" %>
+      <%= form.submit class: "btn-primary" %>
     </div>
   </div>
 <% end %>

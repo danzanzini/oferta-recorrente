@@ -1,0 +1,8 @@
+<h1 class="page-title">Editar Assinatura</h1>
+<p>Apoiador: <%= @user.name %></p>
+
+<div class="card mt-4">
+  <%= render 'form', subscription: @subscription %>
+</div>
+
+<%= link_to "Voltar", user_path(@user), class: "link-plain mt-4 inline-block" %>

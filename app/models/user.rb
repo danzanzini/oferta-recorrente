@@ -20,11 +20,19 @@ class User < ApplicationRecord
 
   # Supporter only stuff:
   has_many :harvests
-  belongs_to :location, optional: true
-  delegate :current_offering, to: :location, allow_nil: false
-  validates :location_id, presence: true, if: :supporter?
+  has_one :subscription
+  delegate :location, :item_limit, to: :subscription, allow_nil: true
+  delegate :current_offering, to: :location, allow_nil: true
 
   def current_harvest
     harvests.current.last
+  end
+
+  # Producer only stuff:
+  has_many :producer_locations, foreign_key: :user_id
+  has_many :managed_locations, through: :producer_locations, source: :location
+
+  def manages_location?(location)
+    managed_locations.include?(location) || managed_locations.empty?
   end
 end

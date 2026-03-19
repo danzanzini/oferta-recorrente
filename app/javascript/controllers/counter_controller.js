@@ -1,39 +1,58 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "available"]
+  static targets = ["input", "available", "total"]
+  static values = { limit: Number }
 
   connect() {
+    this.updateTotal()
   }
 
-  increment() {
-    if (this.canIncrement(this.availableTarget)) {
-      this.updateInputValue(this.inputTarget, 1)
-      this.updateAvailableValue(this.availableTarget, -1)
+  increment(event) {
+    const row = event.target.closest("[data-counter-row]")
+    const input = row.querySelector("[data-counter-target='input']")
+    const available = row.querySelector("[data-counter-target='available']")
+
+    if (parseInt(available.textContent) > 0 && this.withinLimit()) {
+      this.changeInputValue(input, 1)
+      this.changeAvailableValue(available, -1)
+      this.updateTotal()
     }
   }
 
-  decrement() {
-    if (this.canDecrement(this.inputTarget)) {
-      this.updateInputValue(this.inputTarget, -1)
-      this.updateAvailableValue(this.availableTarget, 1)
+  decrement(event) {
+    const row = event.target.closest("[data-counter-row]")
+    const input = row.querySelector("[data-counter-target='input']")
+    const available = row.querySelector("[data-counter-target='available']")
+
+    if (parseInt(input.value) > 0) {
+      this.changeInputValue(input, -1)
+      this.changeAvailableValue(available, 1)
+      this.updateTotal()
     }
   }
 
-  canIncrement(available) {
-    return parseInt(available.textContent) > 0
+  withinLimit() {
+    if (!this.hasLimitValue || this.limitValue === 0) return true
+    return this.currentTotal() < this.limitValue
   }
 
-  canDecrement(input) {
-    return parseInt(input.value) > 0
+  currentTotal() {
+    return this.inputTargets.reduce((sum, input) => sum + (parseInt(input.value) || 0), 0)
   }
 
-  updateInputValue(input, delta) {
+  updateTotal() {
+    if (this.hasTotalTarget) {
+      this.totalTarget.textContent = this.currentTotal()
+    }
+  }
+
+  changeInputValue(input, delta) {
     let value = parseInt(input.value) || 0
     input.value = value + delta
   }
 
-  updateAvailableValue(available, delta) {
+  changeAvailableValue(available, delta) {
     let value = parseInt(available.textContent) || 0
     available.textContent = value + delta
   }

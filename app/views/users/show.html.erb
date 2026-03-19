@@ -4,6 +4,21 @@
   <%= render @user %>
 </div>
 
+<% if @user.supporter? %>
+  <div class="card mb-6">
+    <h2 class="text-lg font-semibold mb-2">Assinatura</h2>
+    <% if @user.subscription %>
+      <p>Localização: <%= @user.location&.name %></p>
+      <p>Limite de itens: <%= @user.item_limit %></p>
+      <p>Ativa: <%= @user.subscription.active ? 'Sim' : 'Não' %></p>
+      <%= link_to "Editar assinatura", edit_user_subscription_path(@user, @user.subscription), class: "btn-primary mt-2" %>
+    <% else %>
+      <p class="text-neutral-3">Sem assinatura.</p>
+      <%= link_to "Adicionar assinatura", new_user_subscription_path(@user), class: "btn-primary mt-2" %>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="flex gap-4 items-center">
   <%= link_to "Editar", edit_user_path(@user), class: "btn-primary" %>
   <%= link_to "Voltar", users_path, class: "link-plain" %>

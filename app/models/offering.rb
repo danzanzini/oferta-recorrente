@@ -16,8 +16,11 @@ class Offering < ApplicationRecord
       .where('closes_at >= ?', Time.zone.now)
   }
 
+  scope :active, -> { where(active: true) }
+
   validates :opens_at, :closes_at, presence: true
   validate :closes_after_opening?
+  validate :no_overlapping_offering_at_location
 
   def open?(now)
     opens_at <= now && closes_at >= now
@@ -36,8 +39,20 @@ class Offering < ApplicationRecord
   private
 
   def closes_after_opening?
+    return unless closes_at && opens_at
     return unless closes_at < opens_at
 
     errors.add(:closes_at, 'Must be after opens_at')
+  end
+
+  def no_overlapping_offering_at_location
+    return unless opens_at && closes_at && location_id
+    return if closes_at <= opens_at
+
+    overlapping = Offering.active
+      .where(location_id: location_id)
+      .where.not(id: id)
+      .where('opens_at < ? AND closes_at > ?', closes_at, opens_at)
+    errors.add(:base, 'Já existe uma oferenda aberta para este local neste período') if overlapping.exists?
   end
 end

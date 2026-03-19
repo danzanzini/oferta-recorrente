@@ -10,6 +10,7 @@
     <div class="card">
       <%= render offering %>
       <%= link_to "Ver", offering, class: "link mt-2 inline-block" %>
+      <%= link_to "Copiar", new_offering_path(from_id: offering.id), class: "link mt-2 inline-block" %>
     </div>
   <% end %>
 </div>

@@ -1,0 +1,31 @@
+<%= form_with(model: [@user, subscription]) do |form| %>
+  <% if subscription.errors.any? %>
+    <div class="error-box">
+      <h2 class="font-semibold mb-2"><%= pluralize(subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+      <ul class="list-disc list-inside">
+        <% subscription.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-field">
+    <%= form.label :item_limit, "Limite de itens", class: "form-label" %>
+    <%= form.number_field :item_limit, min: 1 %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :location_id, "Localização", class: "form-label" %>
+    <%= form.collection_select :location_id, Location.all, :id, :name %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :active, "Ativa", class: "form-label" %>
+    <%= form.check_box :active %>
+  </div>
+
+  <div class="mt-6">
+    <%= form.submit class: "btn-primary" %>
+  </div>
+<% end %>

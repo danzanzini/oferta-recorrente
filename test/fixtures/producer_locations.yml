@@ -1,0 +1,6 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+producer_location_one:
+  user: producer
+  location: one
+  organization: one

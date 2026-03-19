@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_01_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "producer_locations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "location_id", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_producer_locations_on_location_id"
+    t.index ["organization_id"], name: "index_producer_locations_on_organization_id"
+    t.index ["user_id", "location_id"], name: "index_producer_locations_on_user_id_and_location_id"
+    t.index ["user_id"], name: "index_producer_locations_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -89,6 +101,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_products_on_organization_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "location_id", null: false
+    t.integer "item_limit", null: false
+    t.boolean "active", default: true, null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_subscriptions_on_location_id"
+    t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,8 +126,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
     t.string "last_name"
     t.boolean "active", default: true, null: false
     t.integer "role", default: 0, null: false
-    t.bigint "location_id"
-    t.index ["location_id"], name: "index_users_on_location_id"
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
@@ -117,6 +140,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_164451) do
   add_foreign_key "offered_products", "products"
   add_foreign_key "offerings", "locations"
   add_foreign_key "offerings", "organizations"
+  add_foreign_key "producer_locations", "locations"
+  add_foreign_key "producer_locations", "organizations"
+  add_foreign_key "producer_locations", "users"
   add_foreign_key "products", "organizations"
-  add_foreign_key "users", "locations"
+  add_foreign_key "subscriptions", "locations"
+  add_foreign_key "subscriptions", "organizations"
+  add_foreign_key "subscriptions", "users"
 end
