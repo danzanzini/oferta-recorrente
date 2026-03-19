@@ -18,4 +18,15 @@
     <strong>Active:</strong>
     <%= user.active? %>
   </p>
+
+  <% if user.supporter? && user.subscription %>
+    <p>
+      <strong>Local:</strong>
+      <%= user.location&.name %>
+    </p>
+    <p>
+      <strong>Limite:</strong>
+      <%= user.item_limit %> itens
+    </p>
+  <% end %>
 </div>
