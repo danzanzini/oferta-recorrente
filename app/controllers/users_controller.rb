@@ -54,6 +54,18 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/edit_password
+  def edit_password; end
+
+  # PATCH /users/update_password
+  def update_password
+    if current_user.update(password_params)
+      redirect_to root_path, notice: 'Senha alterada com sucesso.'
+    else
+      render :edit_password, status: :unprocessable_entity
+    end
+  end
+
   # POST /users/1/toggle_active
   def toggle_active
     authorize @user
@@ -83,5 +95,9 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:email, :first_name, :last_name, :role)
+  end
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end
