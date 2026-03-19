@@ -97,4 +97,30 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_path
   end
+
+  # Harvest index (nested under offering)
+  test 'admin can see harvest index for offering' do
+    log_in_as(users(:admin))
+    get offering_harvests_url(offerings(:open))
+    assert_response :success
+  end
+
+  test 'producer can see harvest index for managed location' do
+    log_in_as(users(:producer))
+    get offering_harvests_url(offerings(:open))
+    assert_response :success
+  end
+
+  test 'supporter cannot see harvest index' do
+    get offering_harvests_url(offerings(:open))
+    assert_redirected_to root_path
+  end
+
+  test 'harvest index is scoped to the offering' do
+    log_in_as(users(:admin))
+    get offering_harvests_url(offerings(:open))
+    # The offering(:open) has no harvests; offering(:one) does — confirms scoping
+    assert_select 'h1', text: /Pedidos/
+    assert_match 'Nenhum pedido', response.body
+  end
 end

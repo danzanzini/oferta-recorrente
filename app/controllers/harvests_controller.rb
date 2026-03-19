@@ -2,8 +2,15 @@
 
 class HarvestsController < ApplicationController
   before_action :require_login
+  before_action :set_offering, only: %i[index]
   before_action :set_current_offering, only: %i[new create edit update]
   before_action :set_harvest, only: %i[show edit update destroy]
+
+  # GET /offerings/:offering_id/harvests
+  def index
+    @harvests = @offering.harvests.includes(harvested_products: :offered_product)
+    authorize @harvests
+  end
 
   # GET /harvests/1 or /harvests/1.json
   def show; end
@@ -65,6 +72,10 @@ class HarvestsController < ApplicationController
 
   def harvest_params
     params.require(:harvest).permit(harvested_products_attributes: %i[id offered_product_id amount _destroy])
+  end
+
+  def set_offering
+    @offering = Offering.find(params[:offering_id])
   end
 
   def set_current_offering

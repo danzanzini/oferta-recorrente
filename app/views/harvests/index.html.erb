@@ -1,15 +1,44 @@
 <% if notice %><p class="notice"><%= notice %></p><% end %>
 
 <div class="flex justify-between items-center mb-6">
-  <h1 class="page-title mb-0">Colheitas</h1>
-  <%= link_to "Nova colheita", new_harvest_path, class: "btn-primary" %>
+  <div>
+    <h1 class="page-title mb-0">Pedidos — <%= @offering.location.name %></h1>
+    <p class="text-sm text-neutral-3 mt-1">
+      <%= I18n.l(@offering.opens_at, format: :short) %> até <%= I18n.l(@offering.closes_at, format: :short) %>
+      &middot; <span class="font-medium"><%= @offering.status %></span>
+    </p>
+  </div>
+  <%= link_to "Voltar", offering_path(@offering), class: "link-plain" %>
 </div>
 
-<div id="harvests" class="space-y-4">
-  <% @harvests.each do |harvest| %>
-    <div class="card">
-      <%= render harvest %>
-      <%= link_to "Ver", harvest, class: "link mt-2 inline-block" %>
-    </div>
-  <% end %>
-</div>
+<% if @harvests.any? %>
+  <div class="card mb-6">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-neutral-2 text-left">
+          <th class="py-2 pr-4 font-semibold">Apoiador</th>
+          <th class="py-2 pr-4 font-semibold">Itens</th>
+          <th class="py-2 font-semibold text-right">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @harvests.each do |harvest| %>
+          <tr class="border-b border-neutral-2 last:border-0">
+            <td class="py-2 pr-4"><%= harvest.user.name %></td>
+            <td class="py-2 pr-4"><%= harvest_to_string(harvest) %></td>
+            <td class="py-2 text-right"><%= harvest.total_items %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 class="text-base font-semibold mb-2">Resumo por produto</h2>
+    <p><%= total_harvested(@offering) %></p>
+  </div>
+<% else %>
+  <div class="card">
+    <p class="text-neutral-3">Nenhum pedido realizado ainda.</p>
+  </div>
+<% end %>
