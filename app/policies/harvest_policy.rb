@@ -25,4 +25,10 @@ class HarvestPolicy < ApplicationPolicy
   def edit?
     update?
   end
+
+  def destroy?
+    user.supporter? &&
+      record.user_id == user.id &&
+      record.offering.open?(Time.zone.now)
+  end
 end

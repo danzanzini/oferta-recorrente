@@ -71,4 +71,30 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test 'supporter can cancel own harvest while offering is open' do
+    harvest = create_harvest
+    assert_difference('Harvest.count', -1) do
+      delete harvest_url(harvest)
+    end
+    assert_redirected_to root_path
+  end
+
+  test 'supporter cannot cancel another users harvest' do
+    other_harvest = harvests(:one) # belongs to user :one, not :supporter
+    assert_no_difference('Harvest.count') do
+      delete harvest_url(other_harvest)
+    end
+    assert_redirected_to root_path
+  end
+
+  test 'supporter cannot cancel harvest when offering is closed' do
+    # harvests(:one) uses offering(:one) which is in the past
+    harvest = harvests(:one)
+    harvest.update_columns(user_id: @user.id)
+    assert_no_difference('Harvest.count') do
+      delete harvest_url(harvest)
+    end
+    assert_redirected_to root_path
+  end
 end
