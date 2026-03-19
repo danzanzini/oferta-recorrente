@@ -6,7 +6,12 @@ class OfferingsController < ApplicationController
 
   # GET /offerings or /offerings.json
   def index
-    @offerings = Offering.all
+    @offerings = if current_user.producer? && current_user.managed_locations.any?
+      Offering.where(location: current_user.managed_locations)
+    else
+      Offering.all
+    end
+    authorize @offerings
   end
 
   # GET /offerings/1 or /offerings/1.json
@@ -15,7 +20,19 @@ class OfferingsController < ApplicationController
   # GET /offerings/new
   def new
     @offering = Offering.new
-    @offering.offered_products.build
+    if params[:from_id]
+      source = Offering.find_by(id: params[:from_id])
+      if source
+        @offering.location_id = source.location_id
+        source.offered_products.each do |op|
+          @offering.offered_products.build(product_id: op.product_id, amount: op.amount)
+        end
+      else
+        @offering.offered_products.build
+      end
+    else
+      @offering.offered_products.build
+    end
     authorize @offering
   end
 

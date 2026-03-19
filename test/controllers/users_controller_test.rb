@@ -13,7 +13,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def invalid_user_params
-    { user: { email: 'new_email@example.com' } }
+    { user: { email: nil } }
   end
 
   test 'should get index' do

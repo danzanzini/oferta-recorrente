@@ -6,7 +6,7 @@ class OfferingPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user.producer?
+    user.admin? || (user.producer? && user.manages_location?(record.location))
   end
 
   def create?
@@ -18,7 +18,7 @@ class OfferingPolicy < ApplicationPolicy
   end
 
   def update?
-    (user.admin? || user.producer?) && record.before_opening?
+    (user.admin? || (user.producer? && user.manages_location?(record.location))) && record.before_opening?
   end
 
   def edit?
@@ -26,10 +26,10 @@ class OfferingPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || user.producer?
+    user.admin? || (user.producer? && user.manages_location?(record.location))
   end
 
   def print?
-    user.admin? || user.producer?
+    user.admin? || (user.producer? && user.manages_location?(record.location))
   end
 end

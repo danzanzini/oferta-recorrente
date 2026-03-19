@@ -7,7 +7,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
   helper_method :logged_in?
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
+
+  def user_not_authorized
+    flash[:alert] = 'Você não tem permissão para realizar esta ação.'
+    redirect_back_or_to root_path, status: :see_other
+  end
 
   def current_user
     @current_user ||= session[:user_id] && User.find_by(id: session[:user_id])

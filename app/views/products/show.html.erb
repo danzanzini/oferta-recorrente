@@ -7,5 +7,8 @@
 <div class="flex gap-4 items-center">
   <%= link_to "Editar", edit_product_path(@product), class: "btn-primary" %>
   <%= link_to "Voltar", products_path, class: "link-plain" %>
-  <%= button_to "Excluir", @product, method: :delete, class: "btn-danger" %>
+  <% if policy(@product).destroy? %>
+    <%= button_to "Excluir", @product, method: :delete, class: "btn-danger",
+        data: { turbo_confirm: "Tem certeza que deseja remover este produto?" } %>
+  <% end %>
 </div>

@@ -10,6 +10,10 @@
     <div class="card">
       <%= render product %>
       <%= link_to "Ver", product, class: "link mt-2 inline-block" %>
+      <% if policy(product).destroy? %>
+        <%= button_to "Excluir", product, method: :delete, class: "btn-danger text-sm mt-2",
+            data: { turbo_confirm: "Tem certeza que deseja remover este produto?" } %>
+      <% end %>
     </div>
   <% end %>
 </div>

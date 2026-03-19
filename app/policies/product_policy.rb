@@ -26,6 +26,8 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || user.producer?
+    return false unless user.admin? || user.producer?
+
+    !record.offered_products.joins(:offering).where(offerings: { active: true }).exists?
   end
 end

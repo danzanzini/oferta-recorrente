@@ -52,7 +52,20 @@ class ProductsController < ApplicationController
     end
   end
 
+  # DELETE /products/1
+  def destroy
+    @product = Product.find(params[:id])
+    authorize @product
+
+    @product.destroy
+    redirect_to products_url, notice: 'Produto removido com sucesso.'
+  end
+
   private
+
+  def user_not_authorized
+    redirect_to products_url, alert: 'Você não tem permissão para realizar esta ação.'
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product

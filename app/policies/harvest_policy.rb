@@ -3,7 +3,11 @@
 # Policy for managing harvest actions
 class HarvestPolicy < ApplicationPolicy
   def show?
-    user.supporter?
+    user.supporter? || user.admin? || user.producer?
+  end
+
+  def index?
+    user.admin? || user.producer?
   end
 
   def create?

@@ -62,4 +62,32 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     patch product_url(@product), params: invalid_product_params
     assert_response :unprocessable_entity
   end
+
+  test "should destroy product not in active offering" do
+    product = Product.create!(name: 'Deletable', organization: organizations(:one))
+    assert_difference("Product.count", -1) do
+      delete product_url(product)
+    end
+    assert_redirected_to products_url
+  end
+
+  test "should not destroy product in active offering" do
+    product = Product.create!(name: 'In Active Offering', organization: organizations(:one))
+    OfferedProduct.create!(
+      offering: offerings(:open),
+      product: product,
+      amount: 5,
+      organization: organizations(:one)
+    )
+    assert_no_difference("Product.count") do
+      delete product_url(product)
+    end
+    assert_redirected_to products_url
+  end
+
+  test "supporter cannot destroy product" do
+    log_in_as(users(:supporter))
+    delete product_url(@product)
+    assert_redirected_to products_url
+  end
 end
