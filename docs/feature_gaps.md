@@ -134,10 +134,10 @@ the copy feature.
 
 | # | Feature | Priority | Status |
 |---|---------|----------|--------|
-| 1 | User password change | High | ⬜ To do |
-| 2 | User re-activation (toggle_active) | High | ⬜ To do |
-| 3 | Harvest index for admin/producer | High | ⬜ To do |
-| 4 | Harvest cancellation by supporter | Medium | ⬜ To do |
-| 5 | Users index shows subscription info | Low | ⬜ To do |
-| 6 | Offering status in index | Low | ⬜ To do |
+| 1 | User password change | High | ✅ Done |
+| 2 | User re-activation (toggle_active) | High | ✅ Done |
+| 3 | Harvest index for admin/producer | High | ✅ Done |
+| 4 | Harvest cancellation by supporter | Medium | ✅ Done |
+| 5 | Users index shows subscription info | Low | ✅ Done |
+| 6 | Offering status in index | Low | ✅ Done |
 | 7 | Copy offering — UI entry point | Low | ✅ Already done |
