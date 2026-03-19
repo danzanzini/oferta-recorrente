@@ -6,6 +6,10 @@
 
 <div class="flex gap-4 items-center">
   <%= link_to "Editar", edit_offering_path(@offering), class: "btn-primary" %>
+  <% if policy(Harvest).index? %>
+    <%= link_to "Ver pedidos", offering_harvests_path(@offering), class: "btn-primary" %>
+  <% end %>
+  <%= link_to "Imprimir", print_offering_path(@offering), class: "link" %>
   <%= link_to "Voltar", offerings_path, class: "link-plain" %>
   <%= button_to "Excluir", @offering, method: :delete, class: "btn-danger" %>
 </div>
