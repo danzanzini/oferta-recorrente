@@ -36,4 +36,24 @@ class HarvestPolicyTest < ActiveSupport::TestCase
   test 'supporter cannot index harvests' do
     assert_not HarvestPolicy.new(@supporter, Harvest).index?
   end
+
+  test 'destroy?: supporter can destroy own harvest on open offering' do
+    open_harvest = Harvest.new(offering: offerings(:open), user: @supporter)
+    assert HarvestPolicy.new(@supporter, open_harvest).destroy?
+  end
+
+  test 'destroy?: supporter cannot destroy when offering is closed' do
+    closed_harvest = Harvest.new(offering: offerings(:closed_past), user: @supporter)
+    assert_not HarvestPolicy.new(@supporter, closed_harvest).destroy?
+  end
+
+  test 'destroy?: supporter cannot destroy another users harvest' do
+    other_harvest = Harvest.new(offering: offerings(:open), user: @admin)
+    assert_not HarvestPolicy.new(@supporter, other_harvest).destroy?
+  end
+
+  test 'destroy?: admin cannot destroy' do
+    open_harvest = Harvest.new(offering: offerings(:open), user: @supporter)
+    assert_not HarvestPolicy.new(@admin, open_harvest).destroy?
+  end
 end

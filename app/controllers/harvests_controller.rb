@@ -3,7 +3,7 @@
 class HarvestsController < ApplicationController
   before_action :require_login
   before_action :set_current_offering, only: %i[new create edit update]
-  before_action :set_harvest, only: %i[show edit update]
+  before_action :set_harvest, only: %i[show edit update destroy]
 
   # GET /harvests/1 or /harvests/1.json
   def show; end
@@ -34,6 +34,12 @@ class HarvestsController < ApplicationController
         format.json { render json: @harvest.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # DELETE /harvests/1
+  def destroy
+    @harvest.destroy
+    redirect_to root_path, notice: 'Pedido cancelado com sucesso.'
   end
 
   # PATCH/PUT /harvests/1 or /harvests/1.json
