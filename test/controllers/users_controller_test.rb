@@ -74,4 +74,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to users_url
   end
+
+  test 'admin can deactivate an active user' do
+    target = users(:supporter)
+    assert target.active?
+    post toggle_active_user_url(target)
+    assert_not target.reload.active?
+    assert_redirected_to user_url(target)
+  end
+
+  test 'admin can activate a deactivated user' do
+    target = users(:supporter)
+    target.update!(active: false)
+    post toggle_active_user_url(target)
+    assert target.reload.active?
+    assert_redirected_to user_url(target)
+  end
+
+  test 'non-admin cannot toggle active' do
+    log_in_as(users(:supporter))
+    target = users(:admin)
+    post toggle_active_user_url(target)
+    assert_redirected_to root_path
+  end
 end

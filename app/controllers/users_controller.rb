@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :require_login
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy toggle_active]
 
   # GET /users or /users.json
   def index
@@ -52,6 +52,14 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /users/1/toggle_active
+  def toggle_active
+    authorize @user
+    @user.toggle_active!
+    notice = @user.active? ? 'Usuário ativado.' : 'Usuário desativado.'
+    redirect_to user_url(@user), notice: notice
   end
 
   # DELETE /users/1 or /users/1.json

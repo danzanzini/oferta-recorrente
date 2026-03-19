@@ -22,5 +22,10 @@
 <div class="flex gap-4 items-center">
   <%= link_to "Editar", edit_user_path(@user), class: "btn-primary" %>
   <%= link_to "Voltar", users_path, class: "link-plain" %>
-  <%= button_to "Excluir", @user, method: :delete, class: "btn-danger" %>
+  <% if policy(@user).toggle_active? %>
+    <%= button_to @user.active? ? 'Desativar' : 'Ativar',
+          toggle_active_user_path(@user),
+          method: :post,
+          class: @user.active? ? 'btn-danger' : 'btn-primary' %>
+  <% end %>
 </div>
