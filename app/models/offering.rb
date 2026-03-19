@@ -22,6 +22,13 @@ class Offering < ApplicationRecord
   validate :closes_after_opening?
   validate :no_overlapping_offering_at_location
 
+  def status
+    return 'Encerrada' if Time.zone.now > closes_at
+    return 'Agendada'  if Time.zone.now < opens_at
+
+    'Aberta'
+  end
+
   def open?(now)
     opens_at <= now && closes_at >= now
   end

@@ -1,27 +1,28 @@
 <div id="<%= dom_id offering %>">
   <p>
-    <strong>Opens at:</strong>
-    <%= offering.opens_at %>
+    <strong>Status:</strong>
+    <span class="text-sm font-medium"><%= offering.status %></span>
   </p>
 
   <p>
-    <strong>Closes at:</strong>
-    <%= offering.closes_at %>
+    <strong>Local:</strong>
+    <%= offering.location.name %>
   </p>
 
   <p>
-    <strong>Harvest at:</strong>
-    <%= offering.harvest_at %>
+    <strong>Abre em:</strong>
+    <%= I18n.l(offering.opens_at, format: :short) %>
   </p>
 
   <p>
-    <strong>Location:</strong>
-    <%= offering.location_id %>
+    <strong>Encerra em:</strong>
+    <%= I18n.l(offering.closes_at, format: :short) %>
   </p>
 
-  <p>
-    <strong>Organization:</strong>
-    <%= offering.organization_id %>
-  </p>
-
+  <% if offering.harvest_at %>
+    <p>
+      <strong>Colheita em:</strong>
+      <%= I18n.l(offering.harvest_at, format: :long) %>
+    </p>
+  <% end %>
 </div>

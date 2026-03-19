@@ -70,6 +70,18 @@ class OfferingTest < ActiveSupport::TestCase
     ActsAsTenant.current_tenant = nil
   end
 
+  test '#status returns Aberta for an open offering' do
+    assert_equal 'Aberta', offerings(:open).status
+  end
+
+  test '#status returns Encerrada for a past offering' do
+    assert_equal 'Encerrada', offerings(:closed_past).status
+  end
+
+  test '#status returns Agendada for a future offering' do
+    assert_equal 'Agendada', offerings(:closed_future).status
+  end
+
   test 'overlap check allows same offering to be updated (does not conflict with itself)' do
     ActsAsTenant.current_tenant = organizations(:one)
     offering = offerings(:open)
