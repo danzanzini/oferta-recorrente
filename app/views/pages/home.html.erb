@@ -47,6 +47,9 @@
           <% end %>
         <% end %>
 
+        <%# All users %>
+        <%= link_to edit_password_users_path do %><%= render partial: 'article', locals: { call_to_action: 'Alterar senha' } %><% end %>
+
       </nav>
     </div>
   </div>

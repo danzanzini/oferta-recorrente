@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   resources :locations
   resources :products
   resources :users do
+    collection do
+      get   :edit_password
+      patch :update_password
+    end
     member { post :toggle_active }
     resources :subscriptions, only: %i[new create edit update]
   end

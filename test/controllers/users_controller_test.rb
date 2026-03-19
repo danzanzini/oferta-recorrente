@@ -91,6 +91,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_url(target)
   end
 
+  test 'should get edit_password' do
+    get edit_password_users_url
+    assert_response :success
+  end
+
+  test 'should update password successfully' do
+    patch update_password_users_url, params: { user: { password: 'newpassword', password_confirmation: 'newpassword' } }
+    assert_redirected_to root_path
+  end
+
+  test 'should not update password when confirmation does not match' do
+    patch update_password_users_url, params: { user: { password: 'newpassword', password_confirmation: 'wrongpassword' } }
+    assert_response :unprocessable_entity
+  end
+
+  test 'unauthenticated user cannot access edit_password' do
+    delete logout_url
+    get edit_password_users_url
+    assert_redirected_to new_session_url
+  end
+
   test 'non-admin cannot toggle active' do
     log_in_as(users(:supporter))
     target = users(:admin)
