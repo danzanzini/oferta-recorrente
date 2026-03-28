@@ -14,21 +14,23 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-neutral-2 font-sans">
+  <body class="bg-white font-sans">
     <div class="container mx-auto px-4 py-8">
       <header class="flex justify-between items-center mb-8">
         <%= link_to root_path do %>
           <h1 class="text-xl font-bold">CSA Recife</h1>
         <% end %>
-        <nav>
-          <ul class="flex space-x-4">
-            <li><button class="px-4 py-2 text-neutral-3 hover:text-main-2">Gerenciar ▼</button></li>
-            <li><button class="px-4 py-2 text-neutral-3 hover:text-main-2">Minhas Oferendas ▼</button></li>
-            <li><%= button_to('Logout', logout_path, { class: 'px-4 py-2 text-neutral-3 hover:text-main-2', method: :delete}) %></li>
-          </ul>
-        </nav>
+        <% if logged_in? %>
+          <nav>
+            <ul class="flex space-x-4">
+              <li><button class="px-4 py-2 text-neutral-3 hover:text-main-2">Gerenciar ▼</button></li>
+              <li><button class="px-4 py-2 text-neutral-3 hover:text-main-2">Minhas Oferendas ▼</button></li>
+              <li><%= button_to('Logout', logout_path, { class: 'px-4 py-2 text-neutral-3 hover:text-main-2', method: :delete}) %></li>
+            </ul>
+          </nav>
+        <% end %>
       </header>
-      <main class="container mx-auto mt-28 px-5 flex">
+      <main class="mt-8 px-5 flex">
         <%= yield %>
       </main>
     </div>
