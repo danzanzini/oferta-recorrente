@@ -48,6 +48,15 @@ authorization). Policy tests cover the Pundit logic in isolation. Keep them sepa
 
 ---
 
+## Layout shell
+
+- `<main>` must not have `flex` — flex items lose block-level full-width behavior,
+  causing content to left-align rather than fill the container.
+- Gate nav links in `application.html.erb` with `logged_in?` (already a `helper_method`
+  on `ApplicationController`). No need for an `UnauthenticatedController` or separate layout.
+
+---
+
 ## Controller patterns
 
 - `before_action :set_<model>` for member actions. Keep it DRY.
