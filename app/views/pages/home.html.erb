@@ -1,56 +1,52 @@
-<section class="flex overflow-hidden flex-col bg-neutral-1 text-main-2">
-  <div class="flex flex-col w-full bg-white bg-opacity-50 max-md:max-w-full">
-    <header>
+<section class="flex flex-col items-center text-main-2 py-8">
+  <div class="w-full max-w-3xl">
+    <header class="mb-6">
       <h1 class="opacity-50"><%= current_user.name %> – <%= current_user.role.capitalize %></h1>
     </header>
-    <div class="flex z-10 flex-col mt-0 max-w-full text-6xl font-bold leading-[62px] w-[556px]">
-      <h2 class="z-10 self-end w-[321px] max-md:text-4xl max-md:leading-10">O que você gostaria de fazer?</h2>
-    </div>
-    <div class="flex z-10 flex-col self-end mt-0 max-w-full w-[833px] max-md:mt-0">
-      <nav class="flex flex-wrap gap-5 max-w-full min-h-[226px] w-[596px]">
+    <h2 class="text-5xl font-bold leading-tight mb-8">O que você gostaria<br>de fazer?</h2>
+    <nav class="flex flex-wrap gap-5">
 
-        <%# Admin cards %>
-        <% if current_user.admin? %>
-          <%= link_to users_path do %><%= render partial: 'article', locals: { call_to_action: 'Usuários' } %><% end %>
-          <%= link_to locations_path do %><%= render partial: 'article', locals: { call_to_action: 'Localizações' } %><% end %>
-          <%= link_to offerings_path do %><%= render partial: 'article', locals: { call_to_action: 'Oferendas' } %><% end %>
-          <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Produtos' } %><% end %>
-        <% end %>
+      <%# Admin cards %>
+      <% if current_user.admin? %>
+        <%= link_to users_path do %><%= render partial: 'article', locals: { call_to_action: 'Usuários' } %><% end %>
+        <%= link_to locations_path do %><%= render partial: 'article', locals: { call_to_action: 'Localizações' } %><% end %>
+        <%= link_to offerings_path do %><%= render partial: 'article', locals: { call_to_action: 'Oferendas' } %><% end %>
+        <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Produtos' } %><% end %>
+      <% end %>
 
-        <%# Producer cards %>
-        <% if current_user.producer? %>
-          <%= link_to offerings_path do %><%= render partial: 'article', locals: { call_to_action: 'Minhas Oferendas' } %><% end %>
-          <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Produtos' } %><% end %>
-        <% end %>
+      <%# Producer cards %>
+      <% if current_user.producer? %>
+        <%= link_to offerings_path do %><%= render partial: 'article', locals: { call_to_action: 'Minhas Oferendas' } %><% end %>
+        <%= link_to products_path do %><%= render partial: 'article', locals: { call_to_action: 'Produtos' } %><% end %>
+      <% end %>
 
-        <%# Supporter cards %>
-        <% if current_user.supporter? %>
-          <% if current_user.current_offering %>
-            <%= link_to current_user.current_offering do %>
-              <%= render partial: 'article', locals: {
-                call_to_action: 'Ver oferenda da semana',
-                subtitle: "Encerra #{current_user.current_offering.closes_at.strftime('%d.%m, %H:%M')}"
-              } %>
-            <% end %>
-          <% end %>
-
-          <% if @last_harvest %>
-            <%= link_to harvest_path(@last_harvest) do %>
-              <%= render partial: 'article', locals: { call_to_action: 'Ver meu último pedido' } %>
-            <% end %>
-          <% end %>
-
-          <% if policy(Harvest).create? || @current_harvest && policy(@current_harvest).update? %>
-            <%= link_to current_harvest_path(@current_harvest) do %>
-              <%= render partial: 'article', locals: { call_to_action: current_harvest_call_to_action(@current_harvest) } %>
-            <% end %>
+      <%# Supporter cards %>
+      <% if current_user.supporter? %>
+        <% if current_user.current_offering %>
+          <%= link_to current_user.current_offering do %>
+            <%= render partial: 'article', locals: {
+              call_to_action: 'Ver oferenda da semana',
+              subtitle: "Encerra #{current_user.current_offering.closes_at.strftime('%d.%m, %H:%M')}"
+            } %>
           <% end %>
         <% end %>
 
-        <%# All users %>
-        <%= link_to edit_password_users_path do %><%= render partial: 'article', locals: { call_to_action: 'Alterar senha' } %><% end %>
+        <% if @last_harvest %>
+          <%= link_to harvest_path(@last_harvest) do %>
+            <%= render partial: 'article', locals: { call_to_action: 'Ver meu último pedido' } %>
+          <% end %>
+        <% end %>
 
-      </nav>
-    </div>
+        <% if policy(Harvest).create? || @current_harvest && policy(@current_harvest).update? %>
+          <%= link_to current_harvest_path(@current_harvest) do %>
+            <%= render partial: 'article', locals: { call_to_action: current_harvest_call_to_action(@current_harvest) } %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%# All users %>
+      <%= link_to edit_password_users_path do %><%= render partial: 'article', locals: { call_to_action: 'Alterar senha' } %><% end %>
+
+    </nav>
   </div>
 </section>
