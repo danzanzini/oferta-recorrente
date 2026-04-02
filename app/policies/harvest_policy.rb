@@ -32,4 +32,8 @@ class HarvestPolicy < ApplicationPolicy
         record.user_id == user.id &&
         record.offering.open_at?(Time.zone.now))
   end
+
+  def use_harvest_offering?
+    user.admin?
+  end
 end

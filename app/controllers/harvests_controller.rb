@@ -79,6 +79,6 @@ class HarvestsController < ApplicationController
   end
 
   def set_current_offering
-    @current_offering = (current_user.admin? && @harvest) ? @harvest.offering : current_user.current_offering
+    @current_offering = (@harvest && policy(@harvest).use_harvest_offering?) ? @harvest.offering : current_user.current_offering
   end
 end
