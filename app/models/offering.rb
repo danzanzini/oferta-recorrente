@@ -11,7 +11,7 @@ class Offering < ApplicationRecord
 
   accepts_nested_attributes_for :offered_products, allow_destroy: true, reject_if: :all_blank
 
-  enum publish_status: { scheduled: 0, open: 1, closed: 2, unpublished: 3 }
+  enum publish_status: { scheduled: 'scheduled', open: 'open', closed: 'closed', unpublished: 'unpublished' }
 
   scope :open_now, lambda {
     where('opens_at <= ?', Time.zone.now)
