@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_01_000003) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_02_222701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -126,7 +126,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_000003) do
     t.string "last_name"
     t.boolean "active", default: true, null: false
     t.integer "role", default: 0, null: false
+    t.string "password_reset_token"
+    t.datetime "password_reset_sent_at"
     t.index ["organization_id"], name: "index_users_on_organization_id"
+    t.index ["password_reset_token"], name: "index_users_on_password_reset_token", unique: true
   end
 
   add_foreign_key "harvested_products", "harvests"

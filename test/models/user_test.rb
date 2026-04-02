@@ -36,4 +36,22 @@ class UserTest < ActiveSupport::TestCase
     @user.toggle_active!
     assert @user.active
   end
+
+  test '#generate_password_reset_token! sets token and sent_at' do
+    ActsAsTenant.current_tenant = @org_one
+    @user.generate_password_reset_token!
+    assert_not_nil @user.password_reset_token
+    assert_not_nil @user.password_reset_sent_at
+    assert @user.password_reset_token.length > 10
+  end
+
+  test '#password_reset_expired? returns true after 2 hours' do
+    @user.password_reset_sent_at = 2.hours.ago - 1.second
+    assert @user.password_reset_expired?
+  end
+
+  test '#password_reset_expired? returns false within 2 hours' do
+    @user.password_reset_sent_at = 1.hour.ago
+    assert_not @user.password_reset_expired?
+  end
 end

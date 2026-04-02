@@ -18,6 +18,16 @@ class User < ApplicationRecord
     update_attribute!(:active, !active)
   end
 
+  def generate_password_reset_token!
+    self.password_reset_token = SecureRandom.urlsafe_base64(16)
+    self.password_reset_sent_at = Time.zone.now
+    save!(validate: false)
+  end
+
+  def password_reset_expired?
+    password_reset_sent_at < 2.hours.ago
+  end
+
   # Supporter only stuff:
   has_many :harvests
   has_one :subscription

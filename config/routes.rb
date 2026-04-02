@@ -27,4 +27,8 @@ Rails.application.routes.draw do
 
   resource :session, only: %i[new create destroy]
   delete 'logout', to: 'sessions#destroy', as: 'logout'
+
+  resource  :password_resets, only: %i[new create]
+  get   'password_resets/:token/edit', to: 'password_resets#edit',   as: :edit_password_reset
+  patch 'password_resets/:token',      to: 'password_resets#update', as: :password_reset
 end
