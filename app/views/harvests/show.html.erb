@@ -5,10 +5,13 @@
 </div>
 
 <div class="flex gap-4 items-center">
-  <%= link_to "Editar", edit_harvest_path(@harvest), class: "btn-primary" %>
+  <% if policy(@harvest).edit? %>
+    <%= link_to "Editar", edit_harvest_path(@harvest), class: "btn-primary" %>
+  <% end %>
   <%= link_to "Voltar", root_path, class: "link-plain" %>
   <% if policy(@harvest).destroy? %>
-    <%= button_to "Cancelar pedido", @harvest, method: :delete, class: "btn-danger",
-          data: { turbo_confirm: "Tem certeza que deseja cancelar seu pedido?" } %>
+    <% confirm_msg = current_user.admin? ? "Excluir este pedido?" : "Tem certeza que deseja cancelar seu pedido?" %>
+    <%= button_to (current_user.admin? ? "Excluir pedido" : "Cancelar pedido"), @harvest, method: :delete, class: "btn-danger",
+          data: { turbo_confirm: confirm_msg } %>
   <% end %>
 </div>

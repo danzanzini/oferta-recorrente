@@ -19,7 +19,7 @@ class HarvestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.supporter? && user.current_harvest&.id == record.id
+    user.admin? || (user.supporter? && user.current_harvest&.id == record.id)
   end
 
   def edit?
@@ -27,8 +27,9 @@ class HarvestPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.supporter? &&
-      record.user_id == user.id &&
-      record.offering.open_at?(Time.zone.now)
+    user.admin? ||
+      (user.supporter? &&
+        record.user_id == user.id &&
+        record.offering.open_at?(Time.zone.now))
   end
 end

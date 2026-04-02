@@ -52,8 +52,17 @@ class HarvestPolicyTest < ActiveSupport::TestCase
     assert_not HarvestPolicy.new(@supporter, other_harvest).destroy?
   end
 
-  test 'destroy?: admin cannot destroy' do
+  test 'destroy?: admin can destroy open offering harvest' do
     open_harvest = Harvest.new(offering: offerings(:open), user: @supporter)
-    assert_not HarvestPolicy.new(@admin, open_harvest).destroy?
+    assert HarvestPolicy.new(@admin, open_harvest).destroy?
+  end
+
+  test 'update?: admin can update any harvest' do
+    assert HarvestPolicy.new(@admin, @harvest).update?
+  end
+
+  test 'destroy?: admin can destroy any harvest including on closed offering' do
+    closed_harvest = Harvest.new(offering: offerings(:closed_past), user: @supporter)
+    assert HarvestPolicy.new(@admin, closed_harvest).destroy?
   end
 end

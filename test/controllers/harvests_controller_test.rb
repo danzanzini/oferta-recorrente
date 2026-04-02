@@ -123,4 +123,27 @@ class HarvestsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h1', text: /Pedidos/
     assert_match 'Nenhum pedido', response.body
   end
+
+  # Admin full harvest CRUD
+  test 'admin GET edit returns 200' do
+    log_in_as(users(:admin))
+    harvest = create_harvest
+    get edit_harvest_url(harvest)
+    assert_response :success
+  end
+
+  test 'admin PATCH update succeeds' do
+    log_in_as(users(:admin))
+    harvest = create_harvest
+    patch harvest_url(harvest), params: valid_params(@offered_one)
+    assert_redirected_to harvest_url(harvest)
+  end
+
+  test 'admin DELETE destroy succeeds' do
+    log_in_as(users(:admin))
+    assert_difference('Harvest.count', -1) do
+      delete harvest_url(harvests(:one))
+    end
+    assert_redirected_to root_path
+  end
 end

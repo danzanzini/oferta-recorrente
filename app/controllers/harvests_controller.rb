@@ -3,8 +3,8 @@
 class HarvestsController < ApplicationController
   before_action :require_login
   before_action :set_offering, only: %i[index]
-  before_action :set_current_offering, only: %i[new create edit update]
   before_action :set_harvest, only: %i[show edit update destroy]
+  before_action :set_current_offering, only: %i[new create edit update]
 
   # GET /offerings/:offering_id/harvests
   def index
@@ -79,6 +79,6 @@ class HarvestsController < ApplicationController
   end
 
   def set_current_offering
-    @current_offering = current_user.current_offering
+    @current_offering = (current_user.admin? && @harvest) ? @harvest.offering : current_user.current_offering
   end
 end
