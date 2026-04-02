@@ -24,4 +24,16 @@ class UserPolicyTest < ActiveSupport::TestCase
   test 'supporter cannot toggle_active' do
     assert_not UserPolicy.new(@supporter, @target).toggle_active?
   end
+
+  test 'admin can reset_password' do
+    assert UserPolicy.new(@admin, @target).reset_password?
+  end
+
+  test 'producer cannot reset_password' do
+    assert_not UserPolicy.new(@producer, @target).reset_password?
+  end
+
+  test 'supporter cannot reset_password' do
+    assert_not UserPolicy.new(@supporter, @target).reset_password?
+  end
 end

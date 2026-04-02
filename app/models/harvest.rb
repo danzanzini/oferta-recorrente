@@ -5,7 +5,7 @@ class Harvest < ApplicationRecord
 
   accepts_nested_attributes_for :harvested_products, allow_destroy: true, reject_if: :all_blank
 
-  scope :current, -> { where(offering_id: Offering.open_now) }
+  scope :current, -> { where(offering_id: Offering.visible_to_supporters) }
 
   validate :within_subscription_limit
 

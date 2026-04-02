@@ -6,6 +6,7 @@ one:
   harvest_at: 2024-05-13
   location: one
   organization: one
+  publish_status: closed
 
 two:
   opens_at: 2024-05-13 09:43:27
@@ -13,30 +14,42 @@ two:
   harvest_at: 2024-05-13
   location: two
   organization: two
+  publish_status: closed
 
 open:
   opens_at: <%= 1.hour.ago %>
   closes_at: <%= 1.hour.from_now %>
   location: one
   organization: one
+  publish_status: open
 
 closed_past:
   opens_at: <%= 2.days.ago %>
   closes_at: <%= 1.day.ago %>
   location: one
   organization: one
+  publish_status: closed
 
 closed_future:
   opens_at: <%= 1.day.from_now %>
   closes_at: <%= 2.days.from_now %>
   location: one
   organization: one
+  publish_status: scheduled
 
 not_open_yet:
-  opens_at: <%= 1.day.from_now %> %>
-  closes_at: <%= 2.day.from_now %>
+  opens_at: <%= 10.days.from_now %>
+  closes_at: <%= 11.days.from_now %>
   location: one
   organization: one
+  publish_status: scheduled
+
+published_future:
+  opens_at: <%= 3.days.from_now %>
+  closes_at: <%= 4.days.from_now %>
+  location: one
+  organization: one
+  publish_status: open
   
 
 

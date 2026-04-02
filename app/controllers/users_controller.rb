@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :require_login
-  before_action :set_user, only: %i[show edit update destroy toggle_active]
+  before_action :set_user, only: %i[show edit update destroy toggle_active reset_password]
 
   # GET /users or /users.json
   def index
@@ -72,6 +72,14 @@ class UsersController < ApplicationController
     @user.toggle_active!
     notice = @user.active? ? 'Usuário ativado.' : 'Usuário desativado.'
     redirect_to user_url(@user), notice: notice
+  end
+
+  # POST /users/1/reset_password
+  def reset_password
+    authorize @user
+    @user.generate_password_reset_token!
+    UserMailer.password_reset(@user).deliver_now
+    redirect_to user_url(@user), notice: 'E-mail de redefinição de senha enviado.'
   end
 
   # DELETE /users/1 or /users/1.json

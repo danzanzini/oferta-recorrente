@@ -4,6 +4,6 @@ class Location < ApplicationRecord
 
   validates :name, :pickup_place, :address, presence: true
   def current_offering
-    offerings.open_now.last
+    offerings.visible_to_supporters.last
   end
 end

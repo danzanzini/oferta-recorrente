@@ -55,6 +55,7 @@ end
 
 group :development do
   gem 'roo', '~> 2.10.0'
+  gem 'letter_opener'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 

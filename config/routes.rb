@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   resources :harvests, except: %i[index]
   resources :offerings do
-    member { get :print }
+    member do
+      get  :print
+      post :toggle_publish
+    end
     resources :harvests, only: %i[index]
   end
   resources :locations
@@ -13,7 +16,10 @@ Rails.application.routes.draw do
       get   :edit_password
       patch :update_password
     end
-    member { post :toggle_active }
+    member do
+      post :toggle_active
+      post :reset_password
+    end
     resources :subscriptions, only: %i[new create edit update]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -27,4 +33,8 @@ Rails.application.routes.draw do
 
   resource :session, only: %i[new create destroy]
   delete 'logout', to: 'sessions#destroy', as: 'logout'
+
+  resource  :password_resets, only: %i[new create]
+  get   'password_resets/:token/edit', to: 'password_resets#edit',   as: :edit_password_reset
+  patch 'password_resets/:token',      to: 'password_resets#update', as: :password_reset
 end

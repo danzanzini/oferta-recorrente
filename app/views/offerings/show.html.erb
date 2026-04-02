@@ -9,6 +9,11 @@
   <% if policy(Harvest).index? %>
     <%= link_to "Ver pedidos", offering_harvests_path(@offering), class: "btn-primary" %>
   <% end %>
+  <% if policy(@offering).toggle_publish? %>
+    <% publish_label = @offering.open? ? 'Despublicar' : (@offering.unpublished? ? 'Reativar' : 'Publicar agora') %>
+    <%= button_to publish_label, toggle_publish_offering_path(@offering),
+          method: :post, class: 'btn-secondary' %>
+  <% end %>
   <%= link_to "Imprimir", print_offering_path(@offering), class: "link" %>
   <%= link_to "Voltar", offerings_path, class: "link-plain" %>
   <%= button_to "Excluir", @offering, method: :delete, class: "btn-danger" %>

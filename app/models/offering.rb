@@ -11,6 +11,8 @@ class Offering < ApplicationRecord
 
   accepts_nested_attributes_for :offered_products, allow_destroy: true, reject_if: :all_blank
 
+  enum publish_status: { scheduled: 'scheduled', open: 'open', closed: 'closed', unpublished: 'unpublished' }
+
   scope :open_now, lambda {
     where('opens_at <= ?', Time.zone.now)
       .where('closes_at >= ?', Time.zone.now)
@@ -18,19 +20,40 @@ class Offering < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  scope :visible_to_supporters, lambda {
+    now = Time.zone.now
+    where(publish_status: :open).or(
+      where(publish_status: :scheduled)
+        .where('opens_at <= ? AND closes_at >= ?', now, now)
+    )
+  }
+
   validates :opens_at, :closes_at, presence: true
   validate :closes_after_opening?
   validate :no_overlapping_offering_at_location
 
   def status
-    return 'Encerrada' if Time.zone.now > closes_at
-    return 'Agendada'  if Time.zone.now < opens_at
-
-    'Aberta'
+    case publish_status
+    when 'scheduled'   then 'Agendada'
+    when 'open'        then 'Aberta'
+    when 'closed'      then 'Encerrada'
+    when 'unpublished' then 'Despublicada'
+    end
   end
 
-  def open?(now)
-    opens_at <= now && closes_at >= now
+  def transition_status!
+    return if unpublished?
+
+    now = Time.zone.now
+    if (scheduled? || open?) && now > closes_at
+      update_columns(publish_status: :closed)
+    elsif scheduled? && now >= opens_at
+      update_columns(publish_status: :open)
+    end
+  end
+
+  def open_at?(time)
+    opens_at <= time && closes_at >= time
   end
 
   def before_opening?

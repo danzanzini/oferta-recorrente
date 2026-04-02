@@ -19,6 +19,7 @@
           <th class="py-2 pr-4 font-semibold">Apoiador</th>
           <th class="py-2 pr-4 font-semibold">Itens</th>
           <th class="py-2 font-semibold text-right">Total</th>
+          <% if current_user.admin? %><th class="py-2 pl-4"></th><% end %>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +28,9 @@
             <td class="py-2 pr-4"><%= harvest.user.name %></td>
             <td class="py-2 pr-4"><%= harvest_to_string(harvest) %></td>
             <td class="py-2 text-right"><%= harvest.total_items %></td>
+            <% if current_user.admin? %>
+              <td class="py-2 pl-4"><%= link_to "Editar", edit_harvest_path(harvest), class: "link-plain text-xs" %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

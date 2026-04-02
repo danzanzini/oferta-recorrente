@@ -2,7 +2,7 @@
 
 class OfferingsController < ApplicationController
   before_action :require_login
-  before_action :set_offering, only: %i[show edit update destroy print]
+  before_action :set_offering, only: %i[show edit update destroy print toggle_publish]
 
   # GET /offerings or /offerings.json
   def index
@@ -80,7 +80,23 @@ class OfferingsController < ApplicationController
   end
 
   def print
-    @harvests = @offering.harvests
+    @harvests = @offering.harvests.includes(harvested_products: :offered_product, user: [])
+    render layout: 'print'
+  end
+
+  def toggle_publish
+    case @offering.publish_status
+    when 'scheduled', 'closed'
+      @offering.update!(publish_status: :open)
+      notice = 'Oferenda publicada.'
+    when 'open'
+      @offering.update!(publish_status: :unpublished)
+      notice = 'Oferenda despublicada.'
+    when 'unpublished'
+      @offering.update!(publish_status: :scheduled)
+      notice = 'Oferenda agendada para publicação automática.'
+    end
+    redirect_to offering_url(@offering), notice: notice
   end
 
   private
@@ -88,6 +104,7 @@ class OfferingsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_offering
     @offering = Offering.find(params[:id])
+    @offering.transition_status!
     authorize @offering
   end
 

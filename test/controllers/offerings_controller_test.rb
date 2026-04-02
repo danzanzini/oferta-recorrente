@@ -85,4 +85,60 @@ class OfferingsControllerTest < ActionDispatch::IntegrationTest
     get offerings_url
     assert_response :success
   end
+
+  # Publish workflow
+  test 'admin can toggle_publish: scheduled → open' do
+    offering = offerings(:not_open_yet)
+    assert offering.scheduled?
+    post toggle_publish_offering_url(offering)
+    assert offering.reload.open?
+    assert_redirected_to offering_url(offering)
+  end
+
+  test 'admin can toggle_publish: open → unpublished' do
+    offering = offerings(:open)
+    assert offering.open?
+    post toggle_publish_offering_url(offering)
+    assert offering.reload.unpublished?
+    assert_redirected_to offering_url(offering)
+  end
+
+  test 'admin can toggle_publish: unpublished → scheduled' do
+    offering = offerings(:not_open_yet)
+    offering.update_columns(publish_status: Offering.publish_statuses[:unpublished])
+    post toggle_publish_offering_url(offering)
+    assert offering.reload.scheduled?
+    assert_redirected_to offering_url(offering)
+  end
+
+  test 'supporter cannot toggle_publish' do
+    log_in_as(users(:supporter))
+    post toggle_publish_offering_url(offerings(:open))
+    assert_redirected_to root_path
+  end
+
+  # Print view
+  test 'print renders with print layout (no nav)' do
+    get print_offering_url(offerings(:open))
+    assert_response :success
+    assert_select 'nav', count: 0
+    assert_select 'header', count: 0
+  end
+
+  test 'print renders a table of harvests' do
+    get print_offering_url(offerings(:open))
+    assert_response :success
+    assert_select 'table'
+  end
+
+  test 'print includes window.print()' do
+    get print_offering_url(offerings(:open))
+    assert_match 'window.print()', response.body
+  end
+
+  test 'supporter cannot access print page' do
+    log_in_as(users(:supporter))
+    get print_offering_url(offerings(:open))
+    assert_redirected_to root_path
+  end
 end
