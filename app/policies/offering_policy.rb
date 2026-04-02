@@ -32,4 +32,8 @@ class OfferingPolicy < ApplicationPolicy
   def print?
     user.admin? || (user.producer? && user.manages_location?(record.location))
   end
+
+  def toggle_publish?
+    user.admin? || (user.producer? && user.manages_location?(record.location))
+  end
 end

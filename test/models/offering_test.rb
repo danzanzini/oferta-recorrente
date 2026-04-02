@@ -17,13 +17,13 @@ class OfferingTest < ActiveSupport::TestCase
     now = Time.now
     @offering.opens_at = now - 1.hour
     @offering.closes_at = now + 1.hour
-    assert @offering.open?(now)
+    assert @offering.open_at?(now)
   end
 
   test 'its closed at a given time' do
     now = Time.now
     @offering.opens_at = now + 1.hour
-    assert !@offering.open?(now)
+    assert !@offering.open_at?(now)
   end
 
   test '#before_opening?' do
@@ -80,6 +80,81 @@ class OfferingTest < ActiveSupport::TestCase
 
   test '#status returns Agendada for a future offering' do
     assert_equal 'Agendada', offerings(:closed_future).status
+  end
+
+  # Publish workflow
+  test 'new offering defaults to scheduled publish_status' do
+    ActsAsTenant.current_tenant = organizations(:one)
+    offering = Offering.new(opens_at: 1.day.from_now, closes_at: 2.days.from_now,
+                            location: locations(:one), organization: organizations(:one))
+    assert offering.scheduled?
+  ensure
+    ActsAsTenant.current_tenant = nil
+  end
+
+  test 'visible_to_supporters includes open-status offering' do
+    assert_includes Offering.visible_to_supporters, offerings(:open)
+  end
+
+  test 'visible_to_supporters excludes future scheduled offering' do
+    assert_not_includes Offering.visible_to_supporters, offerings(:closed_future)
+  end
+
+  test 'visible_to_supporters includes manually open offering before opens_at' do
+    assert_includes Offering.visible_to_supporters, offerings(:published_future)
+  end
+
+  test 'visible_to_supporters excludes unpublished offering even if time window is active' do
+    open_offering = offerings(:open)
+    open_offering.update_columns(publish_status: Offering.publish_statuses[:unpublished])
+    assert_not_includes Offering.visible_to_supporters, open_offering
+  end
+
+  test 'visible_to_supporters excludes closed offering' do
+    assert_not_includes Offering.visible_to_supporters, offerings(:closed_past)
+  end
+
+  test '#status returns Aberta when publish_status is open' do
+    offering = offerings(:open)
+    assert_equal 'Aberta', offering.status
+  end
+
+  test '#status returns Despublicada when unpublished' do
+    offering = offerings(:open)
+    offering.publish_status = :unpublished
+    assert_equal 'Despublicada', offering.status
+  end
+
+  test '#transition_status! moves scheduled offering to open when opens_at reached' do
+    ActsAsTenant.current_tenant = organizations(:one)
+    offering = offerings(:not_open_yet)
+    offering.update_columns(opens_at: 1.hour.ago, closes_at: 1.hour.from_now)
+    assert offering.scheduled?
+    offering.transition_status!
+    assert offering.reload.open?
+  ensure
+    ActsAsTenant.current_tenant = nil
+  end
+
+  test '#transition_status! moves open offering to closed when closes_at passed' do
+    ActsAsTenant.current_tenant = organizations(:one)
+    offering = offerings(:open)
+    offering.update_columns(closes_at: 1.hour.ago)
+    offering.transition_status!
+    assert offering.reload.closed?
+  ensure
+    ActsAsTenant.current_tenant = nil
+  end
+
+  test '#transition_status! does not change unpublished offering' do
+    ActsAsTenant.current_tenant = organizations(:one)
+    offering = offerings(:open)
+    offering.update_columns(publish_status: Offering.publish_statuses[:unpublished],
+                            closes_at: 1.hour.ago)
+    offering.transition_status!
+    assert offering.reload.unpublished?
+  ensure
+    ActsAsTenant.current_tenant = nil
   end
 
   test 'overlap check allows same offering to be updated (does not conflict with itself)' do

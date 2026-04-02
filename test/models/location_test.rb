@@ -7,7 +7,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test "current_offering returns the last open offering" do
     mock_offerings = Minitest::Mock.new
-    mock_offerings.expect :open_now, [:expected_offering]
+    mock_offerings.expect :visible_to_supporters, [:expected_offering]
 
     @location.stub :offerings, mock_offerings do
       assert_equal :expected_offering, @location.current_offering
@@ -18,7 +18,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test "current_offering returns nil when no offerings are open" do
     mock_offerings = Minitest::Mock.new
-    mock_offerings.expect :open_now, []
+    mock_offerings.expect :visible_to_supporters, []
 
     @location.stub :offerings, mock_offerings do
       assert_nil @location.current_offering

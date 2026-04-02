@@ -29,6 +29,6 @@ class HarvestPolicy < ApplicationPolicy
   def destroy?
     user.supporter? &&
       record.user_id == user.id &&
-      record.offering.open?(Time.zone.now)
+      record.offering.open_at?(Time.zone.now)
   end
 end

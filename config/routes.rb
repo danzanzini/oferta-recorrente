@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   resources :harvests, except: %i[index]
   resources :offerings do
-    member { get :print }
+    member do
+      get  :print
+      post :toggle_publish
+    end
     resources :harvests, only: %i[index]
   end
   resources :locations
