@@ -80,7 +80,8 @@ class OfferingsController < ApplicationController
   end
 
   def print
-    @harvests = @offering.harvests
+    @harvests = @offering.harvests.includes(harvested_products: :offered_product, user: [])
+    render layout: 'print'
   end
 
   def toggle_publish

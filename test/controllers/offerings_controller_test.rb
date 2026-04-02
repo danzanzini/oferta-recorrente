@@ -116,4 +116,29 @@ class OfferingsControllerTest < ActionDispatch::IntegrationTest
     post toggle_publish_offering_url(offerings(:open))
     assert_redirected_to root_path
   end
+
+  # Print view
+  test 'print renders with print layout (no nav)' do
+    get print_offering_url(offerings(:open))
+    assert_response :success
+    assert_select 'nav', count: 0
+    assert_select 'header', count: 0
+  end
+
+  test 'print renders a table of harvests' do
+    get print_offering_url(offerings(:open))
+    assert_response :success
+    assert_select 'table'
+  end
+
+  test 'print includes window.print()' do
+    get print_offering_url(offerings(:open))
+    assert_match 'window.print()', response.body
+  end
+
+  test 'supporter cannot access print page' do
+    log_in_as(users(:supporter))
+    get print_offering_url(offerings(:open))
+    assert_redirected_to root_path
+  end
 end
