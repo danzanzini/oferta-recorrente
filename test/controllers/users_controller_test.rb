@@ -118,4 +118,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     post toggle_active_user_url(target)
     assert_redirected_to root_path
   end
+
+  test 'admin can trigger password reset email for another user' do
+    target = users(:supporter)
+    assert_emails 1 do
+      post reset_password_user_url(target)
+    end
+    assert_redirected_to user_url(target)
+    assert_match(/enviado/, flash[:notice])
+  end
+
+  test 'non-admin cannot trigger password reset' do
+    log_in_as(users(:supporter))
+    target = users(:admin)
+    assert_emails 0 do
+      post reset_password_user_url(target)
+    end
+    assert_redirected_to root_path
+  end
 end

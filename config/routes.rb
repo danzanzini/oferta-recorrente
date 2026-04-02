@@ -13,7 +13,10 @@ Rails.application.routes.draw do
       get   :edit_password
       patch :update_password
     end
-    member { post :toggle_active }
+    member do
+      post :toggle_active
+      post :reset_password
+    end
     resources :subscriptions, only: %i[new create edit update]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
